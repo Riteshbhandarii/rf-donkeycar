@@ -1,0 +1,19 @@
+name: jetRacer
+services:
+  jetracer:
+    image: jetracer:1
+    build: .
+    tty: true
+    ports:
+     - 22:22
+     - 8887:8887
+     - 6006:6006
+    volumes:
+      - ./project:/home/racer/project
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
