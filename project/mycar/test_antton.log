@@ -1,0 +1,148 @@
+starting DonkeyGym env
+Setting default: start_delay 5.0
+Setting default: cam_resolution (120, 160, 3)
+Setting default: log_level 20
+Setting default: steer_limit 1.0
+manual does not exist. you must start sim manually.
+INFO:gym_donkeycar.core.client:connecting to 127.0.0.1:9091 
+/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+loading scene generated_road
+WARNING:gym_donkeycar.envs.donkey_sim:waiting for sim to start..
+INFO:gym_donkeycar.envs.donkey_sim:on need car config
+INFO:gym_donkeycar.envs.donkey_sim:sending car config.
+INFO:gym_donkeycar.envs.donkey_sim:done sending cam config. {'img_w': 160, 'img_h': 120, 'img_d': 3, 'offset_x': 0.0, 'offset_y': 0.7, 'offset_z': 1.0, 'rot_x': -19.0}
+INFO:gym_donkeycar.envs.donkey_sim:sim started!
+
+===================================
+PPO MODEL TEST
+===================================
+Model: models/ppo_models/ppo_session3/checkpoints/ppo_donkey_40000_steps.zip
+Environment: donkey-generated-roads-v0
+Port: 9091
+Steps: 5000
+
+step=    0 | steering=+0.404 | throttle=0.485
+step=   20 | steering=+0.442 | throttle=0.450
+step=   40 | steering=+0.406 | throttle=0.486
+step=   60 | steering=+0.462 | throttle=0.445
+step=   80 | steering=+0.406 | throttle=0.473
+step=  100 | steering=+0.377 | throttle=0.445
+step=  120 | steering=+0.411 | throttle=0.463
+step=  140 | steering=+0.385 | throttle=0.405
+step=  160 | steering=+0.390 | throttle=0.491
+step=  180 | steering=+0.439 | throttle=0.431
+step=  200 | steering=+0.548 | throttle=0.440
+step=  220 | steering=+0.384 | throttle=0.452
+step=  240 | steering=+0.652 | throttle=0.413
+step=  260 | steering=+0.405 | throttle=0.479
+step=  280 | steering=+0.635 | throttle=0.420
+step=  300 | steering=+0.390 | throttle=0.490
+step=  320 | steering=+0.766 | throttle=0.466
+step=  340 | steering=+0.396 | throttle=0.490
+step=  360 | steering=+0.604 | throttle=0.458
+step=  380 | steering=+0.404 | throttle=0.485
+step=  400 | steering=+0.457 | throttle=0.480
+step=  420 | steering=+0.454 | throttle=0.494
+step=  440 | steering=+0.420 | throttle=0.464
+step=  460 | steering=+0.422 | throttle=0.458
+step=  480 | steering=+0.294 | throttle=0.407
+step=  500 | steering=+0.317 | throttle=0.477
+step=  520 | steering=+0.331 | throttle=0.450
+step=  540 | steering=+0.551 | throttle=0.434
+step=  560 | steering=+0.378 | throttle=0.455
+step=  580 | steering=+0.685 | throttle=0.406
+step=  600 | steering=+0.401 | throttle=0.478
+step=  620 | steering=+0.658 | throttle=0.410
+step=  640 | steering=+0.401 | throttle=0.487
+step=  660 | steering=+0.583 | throttle=0.423
+step=  680 | steering=+0.387 | throttle=0.488
+step=  700 | steering=+0.664 | throttle=0.454
+step=  720 | steering=+0.403 | throttle=0.486
+step=  740 | steering=+0.515 | throttle=0.453
+step=  760 | steering=+0.458 | throttle=0.495
+step=  780 | steering=+0.332 | throttle=0.444
+step=  800 | steering=+0.410 | throttle=0.461
+step=  820 | steering=+0.318 | throttle=0.410
+step=  840 | steering=+0.410 | throttle=0.464
+step=  860 | steering=+0.364 | throttle=0.407
+step=  880 | steering=+0.384 | throttle=0.480
+step=  900 | steering=+0.355 | throttle=0.441
+step=  920 | steering=+0.545 | throttle=0.437
+step=  940 | steering=+0.368 | throttle=0.447
+step=  960 | steering=+0.578 | throttle=0.411
+step=  980 | steering=+0.401 | throttle=0.482
+step= 1000 | steering=+0.657 | throttle=0.410
+step= 1020 | steering=+0.390 | throttle=0.485
+step= 1040 | steering=+0.683 | throttle=0.460
+step= 1060 | steering=+0.387 | throttle=0.487
+step= 1080 | steering=+0.637 | throttle=0.457
+step= 1100 | steering=+0.408 | throttle=0.483
+step= 1120 | steering=+0.383 | throttle=0.443
+step= 1140 | steering=+0.398 | throttle=0.471
+step= 1160 | steering=+0.400 | throttle=0.448
+step= 1180 | steering=+0.391 | throttle=0.460
+step= 1200 | steering=+0.432 | throttle=0.432
+step= 1220 | steering=+0.394 | throttle=0.488
+step= 1240 | steering=+0.395 | throttle=0.455
+step= 1260 | steering=+0.558 | throttle=0.442
+step= 1280 | steering=+0.397 | throttle=0.453
+step= 1300 | steering=+0.633 | throttle=0.425
+step= 1320 | steering=+0.396 | throttle=0.470
+step= 1340 | steering=+0.656 | throttle=0.414
+step= 1360 | steering=+0.407 | throttle=0.487
+step= 1380 | steering=+0.690 | throttle=0.415
+step= 1400 | steering=+0.383 | throttle=0.485
+step= 1420 | steering=+0.659 | throttle=0.451
+step= 1440 | steering=+0.404 | throttle=0.485
+step= 1460 | steering=+0.523 | throttle=0.462
+step= 1480 | steering=+0.368 | throttle=0.465
+step= 1500 | steering=+0.398 | throttle=0.446
+step= 1520 | steering=+0.391 | throttle=0.448
+step= 1540 | steering=+0.282 | throttle=0.428
+step= 1560 | steering=+0.417 | throttle=0.487
+step= 1580 | steering=+0.427 | throttle=0.469
+step= 1600 | steering=+0.578 | throttle=0.463
+step= 1620 | steering=+0.368 | throttle=0.453
+step= 1640 | steering=+0.676 | throttle=0.409
+step= 1660 | steering=+0.412 | throttle=0.473
+step= 1680 | steering=+0.628 | throttle=0.405
+step= 1700 | steering=+0.393 | throttle=0.486
+step= 1720 | steering=+0.719 | throttle=0.439
+step= 1740 | steering=+0.409 | throttle=0.486
+step= 1760 | steering=+0.483 | throttle=0.429
+step= 1780 | steering=+0.399 | throttle=0.480
+step= 1800 | steering=+0.427 | throttle=0.438
+step= 1820 | steering=+0.400 | throttle=0.467
+step= 1840 | steering=+0.397 | throttle=0.463
+step= 1860 | steering=+0.368 | throttle=0.472
+Exception: [Errno 54] Connection reset by peer
+Exception in thread Thread-1 (proc_msg):
+Traceback (most recent call last):
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gym_donkeycar/core/client.py", line 102, in proc_msg
+    data = s.recv(1024 * 256)
+           ^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [Errno 54] Connection reset by peer
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/riteshbhandari/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/threading.py", line 1075, in _bootstrap_inner
+    self.run()
+  File "/Users/riteshbhandari/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/threading.py", line 1012, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gym_donkeycar/core/client.py", line 154, in proc_msg
+    self.on_msg_recv({"msg_type": "aborted"})
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gym_donkeycar/core/sim_client.py", line 48, in on_msg_recv
+    self.msg_handler.on_recv_message(json_obj)
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gym_donkeycar/envs/donkey_sim.py", line 383, in on_recv_message
+    self.fns[msg_type](message)
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gym_donkeycar/envs/donkey_sim.py", line 203, in on_abort
+    self.client.stop()
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gym_donkeycar/core/client.py", line 75, in stop
+    self.th.join()
+  File "/Users/riteshbhandari/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/threading.py", line 1146, in join
+    raise RuntimeError("cannot join current thread")
+RuntimeError: cannot join current thread
