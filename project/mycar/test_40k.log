@@ -1,0 +1,301 @@
+starting DonkeyGym env
+Setting default: start_delay 5.0
+Setting default: cam_resolution (120, 160, 3)
+Setting default: log_level 20
+Setting default: steer_limit 1.0
+manual does not exist. you must start sim manually.
+INFO:gym_donkeycar.core.client:connecting to 127.0.0.1:9091 
+/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+INFO:gym_donkeycar.envs.donkey_sim:on need car config
+INFO:gym_donkeycar.envs.donkey_sim:sending car config.
+INFO:gym_donkeycar.envs.donkey_sim:sim started!
+
+===================================
+PPO MODEL TEST
+===================================
+Model: models/ppo_models/ppo_session3/checkpoints/ppo_donkey_40000_steps.zip
+Environment: donkey-generated-roads-v0
+Port: 9091
+Steps: 5000
+
+INFO:gym_donkeycar.envs.donkey_sim:done sending cam config. {'img_w': 160, 'img_h': 120, 'img_d': 3, 'offset_x': 0.0, 'offset_y': 0.7, 'offset_z': 1.0, 'rot_x': -19.0}
+step=    0 | steering=-0.319 | throttle=0.634
+step=   20 | steering=+0.086 | throttle=0.438
+step=   40 | steering=+0.339 | throttle=0.506
+step=   60 | steering=+0.818 | throttle=0.468
+step=   80 | steering=-0.000 | throttle=0.397
+step=  100 | steering=+0.185 | throttle=0.418
+step=  120 | steering=-0.307 | throttle=0.359
+step=  140 | steering=+1.000 | throttle=0.439
+step=  160 | steering=+1.000 | throttle=0.409
+step=  180 | steering=+1.000 | throttle=0.383
+step=  200 | steering=+0.312 | throttle=0.443
+step=  220 | steering=+0.104 | throttle=0.329
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.84 seconds
+step=  240 | steering=+0.465 | throttle=0.496
+step=  260 | steering=-0.053 | throttle=0.371
+step=  280 | steering=+1.000 | throttle=0.360
+step=  300 | steering=-0.643 | throttle=0.183
+step=  320 | steering=+0.377 | throttle=0.511
+step=  340 | steering=+0.670 | throttle=0.360
+step=  360 | steering=+0.533 | throttle=0.540
+step=  380 | steering=+0.069 | throttle=0.414
+step=  400 | steering=-0.908 | throttle=0.284
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.37 seconds
+step=  420 | steering=-0.689 | throttle=0.247
+step=  440 | steering=+1.000 | throttle=0.315
+step=  460 | steering=+0.243 | throttle=0.382
+step=  480 | steering=-0.090 | throttle=0.629
+step=  500 | steering=+0.061 | throttle=0.507
+step=  520 | steering=+1.000 | throttle=0.362
+step=  540 | steering=+0.284 | throttle=0.495
+step=  560 | steering=+0.226 | throttle=0.427
+step=  580 | steering=+0.365 | throttle=0.352
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.21 seconds
+step=  600 | steering=+0.467 | throttle=0.379
+step=  620 | steering=+1.000 | throttle=0.386
+step=  640 | steering=+0.210 | throttle=0.361
+step=  660 | steering=+0.311 | throttle=0.460
+step=  680 | steering=-0.240 | throttle=0.490
+step=  700 | steering=+1.000 | throttle=0.383
+step=  720 | steering=-0.059 | throttle=0.348
+step=  740 | steering=+0.537 | throttle=0.450
+step=  760 | steering=+0.605 | throttle=0.384
+step=  780 | steering=+0.029 | throttle=0.441
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.35 seconds
+step=  800 | steering=-0.321 | throttle=0.464
+step=  820 | steering=-0.011 | throttle=0.366
+step=  840 | steering=+0.588 | throttle=0.302
+step=  860 | steering=-1.000 | throttle=0.276
+step=  880 | steering=+0.473 | throttle=0.426
+step=  900 | steering=-0.706 | throttle=0.299
+step=  920 | steering=+0.030 | throttle=0.497
+step=  940 | steering=+0.376 | throttle=0.473
+step=  960 | steering=+0.364 | throttle=0.450
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.17 seconds
+step=  980 | steering=+0.633 | throttle=0.469
+step= 1000 | steering=-0.014 | throttle=0.284
+step= 1020 | steering=+0.705 | throttle=0.434
+step= 1040 | steering=-0.613 | throttle=0.415
+step= 1060 | steering=+0.366 | throttle=0.554
+step= 1080 | steering=+0.421 | throttle=0.268
+step= 1100 | steering=+0.574 | throttle=0.576
+step= 1120 | steering=-0.072 | throttle=0.408
+step= 1140 | steering=-0.165 | throttle=0.395
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.25 seconds
+step= 1160 | steering=-0.811 | throttle=0.269
+step= 1180 | steering=+1.000 | throttle=0.455
+step= 1200 | steering=+0.493 | throttle=0.439
+step= 1220 | steering=+0.131 | throttle=0.570
+step= 1240 | steering=-0.290 | throttle=0.637
+step= 1260 | steering=+1.000 | throttle=0.362
+step= 1280 | steering=+0.115 | throttle=0.505
+step= 1300 | steering=+0.186 | throttle=0.385
+step= 1320 | steering=-0.616 | throttle=0.185
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.22 seconds
+step= 1340 | steering=+0.190 | throttle=0.368
+step= 1360 | steering=+1.000 | throttle=0.314
+step= 1380 | steering=+0.038 | throttle=0.444
+step= 1400 | steering=+0.398 | throttle=0.417
+step= 1420 | steering=-0.607 | throttle=0.405
+step= 1440 | steering=+1.000 | throttle=0.412
+step= 1460 | steering=-0.140 | throttle=0.307
+step= 1480 | steering=+0.271 | throttle=0.421
+step= 1500 | steering=-0.068 | throttle=0.321
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.26 seconds
+step= 1520 | steering=-0.210 | throttle=0.557
+step= 1540 | steering=+0.248 | throttle=0.590
+step= 1560 | steering=+0.052 | throttle=0.329
+step= 1580 | steering=-0.247 | throttle=0.343
+step= 1600 | steering=+0.192 | throttle=0.183
+step= 1620 | steering=+0.631 | throttle=0.239
+step= 1640 | steering=+0.544 | throttle=0.357
+step= 1660 | steering=+0.581 | throttle=0.430
+step= 1680 | steering=+0.717 | throttle=0.367
+step= 1700 | steering=-0.026 | throttle=0.441
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.23 seconds
+step= 1720 | steering=+0.464 | throttle=0.541
+step= 1740 | steering=+0.008 | throttle=0.243
+step= 1760 | steering=+1.000 | throttle=0.359
+step= 1780 | steering=-0.578 | throttle=0.268
+step= 1800 | steering=+0.218 | throttle=0.532
+step= 1820 | steering=+0.766 | throttle=0.336
+step= 1840 | steering=+0.516 | throttle=0.519
+step= 1860 | steering=+0.542 | throttle=0.488
+step= 1880 | steering=+0.039 | throttle=0.437
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.34 seconds
+step= 1900 | steering=-1.000 | throttle=0.213
+step= 1920 | steering=+1.000 | throttle=0.232
+step= 1940 | steering=+0.393 | throttle=0.294
+step= 1960 | steering=+0.288 | throttle=0.481
+step= 1980 | steering=-0.106 | throttle=0.495
+step= 2000 | steering=+1.000 | throttle=0.423
+step= 2020 | steering=-0.289 | throttle=0.391
+step= 2040 | steering=+0.565 | throttle=0.442
+step= 2060 | steering=-1.000 | throttle=0.125
+step= 2080 | steering=-0.167 | throttle=0.537
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.44 seconds
+step= 2100 | steering=+1.000 | throttle=0.403
+step= 2120 | steering=+0.241 | throttle=0.162
+step= 2140 | steering=+0.509 | throttle=0.326
+step= 2160 | steering=-1.000 | throttle=0.189
+step= 2180 | steering=+0.003 | throttle=0.593
+step= 2200 | steering=+0.038 | throttle=0.423
+step= 2220 | steering=-0.118 | throttle=0.462
+step= 2240 | steering=-0.666 | throttle=0.265
+step= 2260 | steering=+0.389 | throttle=0.413
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.28 seconds
+step= 2280 | steering=+1.000 | throttle=0.437
+step= 2300 | steering=+0.187 | throttle=0.265
+step= 2320 | steering=+0.669 | throttle=0.440
+step= 2340 | steering=-0.697 | throttle=0.410
+step= 2360 | steering=+0.138 | throttle=0.560
+step= 2380 | steering=+0.233 | throttle=0.450
+step= 2400 | steering=+0.616 | throttle=0.440
+step= 2420 | steering=+0.315 | throttle=0.448
+step= 2440 | steering=+0.413 | throttle=0.400
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.1 seconds
+step= 2460 | steering=+1.000 | throttle=0.523
+step= 2480 | steering=+0.403 | throttle=0.308
+step= 2500 | steering=+0.309 | throttle=0.537
+step= 2520 | steering=-0.318 | throttle=0.494
+step= 2540 | steering=+0.013 | throttle=0.468
+step= 2560 | steering=+1.000 | throttle=0.272
+step= 2580 | steering=+0.606 | throttle=0.566
+step= 2600 | steering=-0.010 | throttle=0.401
+step= 2620 | steering=-0.246 | throttle=0.324
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.22 seconds
+step= 2640 | steering=-0.537 | throttle=0.215
+step= 2660 | steering=+0.988 | throttle=0.281
+step= 2680 | steering=+0.340 | throttle=0.466
+step= 2700 | steering=-0.005 | throttle=0.612
+step= 2720 | steering=+0.137 | throttle=0.360
+step= 2740 | steering=+1.000 | throttle=0.248
+step= 2760 | steering=-0.002 | throttle=0.402
+step= 2780 | steering=+0.204 | throttle=0.466
+step= 2800 | steering=+0.482 | throttle=0.380
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.22 seconds
+step= 2820 | steering=+1.000 | throttle=0.421
+step= 2840 | steering=+1.000 | throttle=0.294
+step= 2860 | steering=-0.223 | throttle=0.425
+step= 2880 | steering=-0.127 | throttle=0.366
+step= 2900 | steering=+0.877 | throttle=0.355
+step= 2920 | steering=+0.417 | throttle=0.401
+step= 2940 | steering=-0.606 | throttle=0.383
+step= 2960 | steering=+0.453 | throttle=0.470
+step= 2980 | steering=-0.100 | throttle=0.275
+step= 3000 | steering=+0.204 | throttle=0.388
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.47 seconds
+step= 3020 | steering=+1.000 | throttle=0.232
+step= 3040 | steering=-0.112 | throttle=0.294
+step= 3060 | steering=+0.866 | throttle=0.461
+step= 3080 | steering=-0.467 | throttle=0.233
+step= 3100 | steering=-0.300 | throttle=0.452
+step= 3120 | steering=+0.887 | throttle=0.365
+step= 3140 | steering=+0.354 | throttle=0.543
+step= 3160 | steering=+0.150 | throttle=0.411
+step= 3180 | steering=-0.752 | throttle=0.264
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.3 seconds
+step= 3200 | steering=-0.843 | throttle=0.319
+step= 3220 | steering=+1.000 | throttle=0.377
+step= 3240 | steering=+0.162 | throttle=0.334
+step= 3260 | steering=+0.034 | throttle=0.625
+step= 3280 | steering=-0.366 | throttle=0.486
+step= 3300 | steering=+0.689 | throttle=0.507
+step= 3320 | steering=-0.058 | throttle=0.419
+step= 3340 | steering=+0.246 | throttle=0.458
+step= 3360 | steering=+0.457 | throttle=0.169
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.22 seconds
+step= 3380 | steering=+0.416 | throttle=0.436
+step= 3400 | steering=+1.000 | throttle=0.316
+step= 3420 | steering=-0.170 | throttle=0.364
+step= 3440 | steering=+0.303 | throttle=0.377
+step= 3460 | steering=-0.463 | throttle=0.459
+step= 3480 | steering=+1.000 | throttle=0.406
+step= 3500 | steering=-0.069 | throttle=0.445
+step= 3520 | steering=+1.000 | throttle=0.370
+step= 3540 | steering=-0.517 | throttle=0.236
+step= 3560 | steering=-0.580 | throttle=0.523
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.24 seconds
+step= 3580 | steering=+0.652 | throttle=0.299
+step= 3600 | steering=-0.096 | throttle=0.387
+step= 3620 | steering=+0.081 | throttle=0.426
+step= 3640 | steering=+0.195 | throttle=0.287
+step= 3660 | steering=+0.546 | throttle=0.278
+step= 3680 | steering=+0.268 | throttle=0.310
+step= 3700 | steering=+0.148 | throttle=0.542
+step= 3720 | steering=+0.573 | throttle=0.414
+step= 3740 | steering=-0.583 | throttle=0.326
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.15 seconds
+step= 3760 | steering=+0.301 | throttle=0.472
+step= 3780 | steering=+0.213 | throttle=0.179
+step= 3800 | steering=+0.479 | throttle=0.320
+step= 3820 | steering=-1.000 | throttle=0.358
+step= 3840 | steering=+0.225 | throttle=0.545
+step= 3860 | steering=-0.504 | throttle=0.415
+step= 3880 | steering=+0.846 | throttle=0.457
+step= 3900 | steering=+0.251 | throttle=0.410
+step= 3920 | steering=-0.587 | throttle=0.368
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.35 seconds
+step= 3940 | steering=-0.993 | throttle=0.204
+step= 3960 | steering=+0.876 | throttle=0.398
+step= 3980 | steering=+0.114 | throttle=0.383
+step= 4000 | steering=-0.076 | throttle=0.461
+step= 4020 | steering=+0.056 | throttle=0.548
+step= 4040 | steering=+0.949 | throttle=0.489
+step= 4060 | steering=+0.165 | throttle=0.498
+step= 4080 | steering=-0.436 | throttle=0.191
+step= 4100 | steering=+0.072 | throttle=0.256
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.23 seconds
+step= 4120 | steering=+0.207 | throttle=0.384
+step= 4140 | steering=+1.000 | throttle=0.343
+step= 4160 | steering=+0.099 | throttle=0.382
+step= 4180 | steering=+0.426 | throttle=0.462
+step= 4200 | steering=-0.533 | throttle=0.435
+step= 4220 | steering=+1.000 | throttle=0.490
+step= 4240 | steering=-0.265 | throttle=0.385
+step= 4260 | steering=+1.000 | throttle=0.402
+step= 4280 | steering=-0.068 | throttle=0.427
+step= 4300 | steering=-0.596 | throttle=0.282
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.34 seconds
+step= 4320 | steering=+0.218 | throttle=0.486
+step= 4340 | steering=+0.250 | throttle=0.207
+step= 4360 | steering=+0.531 | throttle=0.274
+step= 4380 | steering=-1.000 | throttle=0.276
+step= 4400 | steering=+0.421 | throttle=0.457
+step= 4420 | steering=-0.713 | throttle=0.243
+step= 4440 | steering=+0.545 | throttle=0.342
+step= 4460 | steering=-0.137 | throttle=0.341
+step= 4480 | steering=+0.224 | throttle=0.466
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.29 seconds
+step= 4500 | steering=+0.739 | throttle=0.502
+step= 4520 | steering=+1.000 | throttle=0.231
+step= 4540 | steering=+0.046 | throttle=0.472
+step= 4560 | steering=-0.130 | throttle=0.522
+step= 4580 | steering=-0.001 | throttle=0.510
+step= 4600 | steering=+0.912 | throttle=0.311
+step= 4620 | steering=+0.718 | throttle=0.468
+step= 4640 | steering=-0.153 | throttle=0.363
+step= 4660 | steering=-0.196 | throttle=0.392
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.2 seconds
+step= 4680 | steering=+0.898 | throttle=0.234
+step= 4700 | steering=+0.930 | throttle=0.374
+step= 4720 | steering=+0.278 | throttle=0.368
+step= 4740 | steering=+0.634 | throttle=0.332
+step= 4760 | steering=-0.574 | throttle=0.397
+step= 4780 | steering=+1.000 | throttle=0.457
+step= 4800 | steering=-0.317 | throttle=0.380
+step= 4820 | steering=+1.000 | throttle=0.306
+step= 4840 | steering=+0.701 | throttle=0.349
+step= 4860 | steering=-0.403 | throttle=0.496
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.6 seconds
+step= 4880 | steering=+0.536 | throttle=0.451
+step= 4900 | steering=-0.005 | throttle=0.256
+step= 4920 | steering=+0.712 | throttle=0.527
+step= 4940 | steering=-0.477 | throttle=0.229
+step= 4960 | steering=+0.022 | throttle=0.521
+step= 4980 | steering=+0.600 | throttle=0.383
+Test finished.
