@@ -1,0 +1,724 @@
+starting DonkeyGym env
+Setting default: start_delay 5.0
+Setting default: cam_resolution (120, 160, 3)
+Setting default: log_level 20
+Setting default: steer_limit 1.0
+manual does not exist. you must start sim manually.
+INFO:gym_donkeycar.core.client:connecting to 127.0.0.1:9091 
+/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+INFO:gym_donkeycar.envs.donkey_sim:on need car config
+INFO:gym_donkeycar.envs.donkey_sim:sending car config.
+INFO:gym_donkeycar.envs.donkey_sim:sim started!
+
+Creating new PPO model...
+Using mps device
+INFO:gym_donkeycar.envs.donkey_sim:done sending cam config. {'img_w': 160, 'img_h': 120, 'img_d': 3, 'offset_x': 0.0, 'offset_y': 0.7, 'offset_z': 1.0, 'rot_x': -19.0}
+
+===================================
+PPO TRAINING
+===================================
+Environment: donkey-generated-roads-v0
+Timesteps: 100000
+N steps: 2048
+Batch size: 64
+Learning rate: 0.0003
+Output: ppo_session3
+
+Logging to models/ppo_models/ppo_session3/tb_logs/ppo_session3_0
+---------------------------------
+| rollout/           |          |
+|    avg_speed       | 0.893    |
+|    ep_len_mean     | 81.8     |
+|    ep_rew_mean     | 61.4     |
+| time/              |          |
+|    fps             | 31       |
+|    iterations      | 1        |
+|    time_elapsed    | 64       |
+|    total_timesteps | 2048     |
+---------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.26        |
+|    ep_len_mean          | 76.9        |
+|    ep_rew_mean          | 58.4        |
+| time/                   |             |
+|    fps                  | 29          |
+|    iterations           | 2           |
+|    time_elapsed         | 141         |
+|    total_timesteps      | 4096        |
+| train/                  |             |
+|    approx_kl            | 0.007954367 |
+|    clip_fraction        | 0.108       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.83       |
+|    explained_variance   | 0.0188      |
+|    learning_rate        | 0.0003      |
+|    loss                 | 1.89        |
+|    n_updates            | 10          |
+|    policy_gradient_loss | -0.00703    |
+|    std                  | 0.998       |
+|    value_loss           | 9.42        |
+-----------------------------------------
+----------------------------------------
+| rollout/                |            |
+|    avg_speed            | 1.15       |
+|    ep_len_mean          | 77.8       |
+|    ep_rew_mean          | 61.1       |
+| time/                   |            |
+|    fps                  | 28         |
+|    iterations           | 3          |
+|    time_elapsed         | 213        |
+|    total_timesteps      | 6144       |
+| train/                  |            |
+|    approx_kl            | 0.01493329 |
+|    clip_fraction        | 0.151      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.83      |
+|    explained_variance   | 0.595      |
+|    learning_rate        | 0.0003     |
+|    loss                 | 4.54       |
+|    n_updates            | 20         |
+|    policy_gradient_loss | -0.0118    |
+|    std                  | 1          |
+|    value_loss           | 21         |
+----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.41        |
+|    ep_len_mean          | 76.9        |
+|    ep_rew_mean          | 65          |
+| time/                   |             |
+|    fps                  | 28          |
+|    iterations           | 4           |
+|    time_elapsed         | 288         |
+|    total_timesteps      | 8192        |
+| train/                  |             |
+|    approx_kl            | 0.010868946 |
+|    clip_fraction        | 0.122       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.83       |
+|    explained_variance   | 0.759       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 12.9        |
+|    n_updates            | 30          |
+|    policy_gradient_loss | -0.00899    |
+|    std                  | 0.989       |
+|    value_loss           | 19.9        |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.72        |
+|    ep_len_mean          | 78.6        |
+|    ep_rew_mean          | 71.1        |
+| time/                   |             |
+|    fps                  | 28          |
+|    iterations           | 5           |
+|    time_elapsed         | 358         |
+|    total_timesteps      | 10240       |
+| train/                  |             |
+|    approx_kl            | 0.017690672 |
+|    clip_fraction        | 0.154       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.81       |
+|    explained_variance   | 0.846       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 4.83        |
+|    n_updates            | 40          |
+|    policy_gradient_loss | -0.0132     |
+|    std                  | 0.987       |
+|    value_loss           | 19.4        |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.61        |
+|    ep_len_mean          | 84.1        |
+|    ep_rew_mean          | 81.2        |
+| time/                   |             |
+|    fps                  | 28          |
+|    iterations           | 6           |
+|    time_elapsed         | 424         |
+|    total_timesteps      | 12288       |
+| train/                  |             |
+|    approx_kl            | 0.010205253 |
+|    clip_fraction        | 0.161       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.8        |
+|    explained_variance   | 0.767       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 9.08        |
+|    n_updates            | 50          |
+|    policy_gradient_loss | -0.0151     |
+|    std                  | 0.976       |
+|    value_loss           | 33.8        |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.9         |
+|    ep_len_mean          | 92.4        |
+|    ep_rew_mean          | 94.8        |
+| time/                   |             |
+|    fps                  | 29          |
+|    iterations           | 7           |
+|    time_elapsed         | 484         |
+|    total_timesteps      | 14336       |
+| train/                  |             |
+|    approx_kl            | 0.010441117 |
+|    clip_fraction        | 0.147       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.78       |
+|    explained_variance   | 0.625       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 9.16        |
+|    n_updates            | 60          |
+|    policy_gradient_loss | -0.00806    |
+|    std                  | 0.965       |
+|    value_loss           | 47.2        |
+-----------------------------------------
+----------------------------------------
+| rollout/                |            |
+|    avg_speed            | 1.24       |
+|    ep_len_mean          | 99         |
+|    ep_rew_mean          | 106        |
+| time/                   |            |
+|    fps                  | 30         |
+|    iterations           | 8          |
+|    time_elapsed         | 544        |
+|    total_timesteps      | 16384      |
+| train/                  |            |
+|    approx_kl            | 0.00917621 |
+|    clip_fraction        | 0.114      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.76      |
+|    explained_variance   | 0.614      |
+|    learning_rate        | 0.0003     |
+|    loss                 | 7.24       |
+|    n_updates            | 70         |
+|    policy_gradient_loss | -0.00609   |
+|    std                  | 0.958      |
+|    value_loss           | 42.9       |
+----------------------------------------
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 14.47 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 13.39 seconds
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.42        |
+|    ep_len_mean          | 113         |
+|    ep_rew_mean          | 125         |
+| time/                   |             |
+|    fps                  | 30          |
+|    iterations           | 9           |
+|    time_elapsed         | 600         |
+|    total_timesteps      | 18432       |
+| train/                  |             |
+|    approx_kl            | 0.015467161 |
+|    clip_fraction        | 0.159       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.74       |
+|    explained_variance   | 0.775       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 6.25        |
+|    n_updates            | 80          |
+|    policy_gradient_loss | -0.0126     |
+|    std                  | 0.951       |
+|    value_loss           | 38.7        |
+-----------------------------------------
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.95 seconds
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.58        |
+|    ep_len_mean          | 122         |
+|    ep_rew_mean          | 140         |
+| time/                   |             |
+|    fps                  | 31          |
+|    iterations           | 10          |
+|    time_elapsed         | 659         |
+|    total_timesteps      | 20480       |
+| train/                  |             |
+|    approx_kl            | 0.017662346 |
+|    clip_fraction        | 0.166       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.73       |
+|    explained_variance   | 0.65        |
+|    learning_rate        | 0.0003      |
+|    loss                 | 5.19        |
+|    n_updates            | 90          |
+|    policy_gradient_loss | -0.0109     |
+|    std                  | 0.942       |
+|    value_loss           | 36          |
+-----------------------------------------
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 13.01 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.92 seconds
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 2.18        |
+|    ep_len_mean          | 133         |
+|    ep_rew_mean          | 158         |
+| time/                   |             |
+|    fps                  | 31          |
+|    iterations           | 11          |
+|    time_elapsed         | 714         |
+|    total_timesteps      | 22528       |
+| train/                  |             |
+|    approx_kl            | 0.012867149 |
+|    clip_fraction        | 0.147       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.71       |
+|    explained_variance   | 0.708       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 6.22        |
+|    n_updates            | 100         |
+|    policy_gradient_loss | -0.0125     |
+|    std                  | 0.934       |
+|    value_loss           | 47.8        |
+-----------------------------------------
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 12.16 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.74 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 12.42 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.35 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.4 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 12.32 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.05 seconds
+----------------------------------------
+| rollout/                |            |
+|    avg_speed            | 2.41       |
+|    ep_len_mean          | 146        |
+|    ep_rew_mean          | 178        |
+| time/                   |            |
+|    fps                  | 32         |
+|    iterations           | 12         |
+|    time_elapsed         | 758        |
+|    total_timesteps      | 24576      |
+| train/                  |            |
+|    approx_kl            | 0.01820625 |
+|    clip_fraction        | 0.206      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.69      |
+|    explained_variance   | 0.715      |
+|    learning_rate        | 0.0003     |
+|    loss                 | 3.36       |
+|    n_updates            | 110        |
+|    policy_gradient_loss | -0.0101    |
+|    std                  | 0.924      |
+|    value_loss           | 47.3       |
+----------------------------------------
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.81 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.6 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.85 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.95 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.6 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 12.02 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.48 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.32 seconds
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 2.34        |
+|    ep_len_mean          | 168         |
+|    ep_rew_mean          | 216         |
+| time/                   |             |
+|    fps                  | 33          |
+|    iterations           | 13          |
+|    time_elapsed         | 802         |
+|    total_timesteps      | 26624       |
+| train/                  |             |
+|    approx_kl            | 0.024203442 |
+|    clip_fraction        | 0.236       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.67       |
+|    explained_variance   | 0.325       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 4.47        |
+|    n_updates            | 120         |
+|    policy_gradient_loss | -0.00732    |
+|    std                  | 0.91        |
+|    value_loss           | 47.3        |
+-----------------------------------------
+Early stopping at step 4 due to reaching max kl: 0.08
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 12.55 seconds
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.91        |
+|    ep_len_mean          | 176         |
+|    ep_rew_mean          | 231         |
+| time/                   |             |
+|    fps                  | 33          |
+|    iterations           | 14          |
+|    time_elapsed         | 858         |
+|    total_timesteps      | 28672       |
+| train/                  |             |
+|    approx_kl            | 0.022296496 |
+|    clip_fraction        | 0.219       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.64       |
+|    explained_variance   | 0.442       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 14.6        |
+|    n_updates            | 125         |
+|    policy_gradient_loss | 0.00147     |
+|    std                  | 0.906       |
+|    value_loss           | 48.1        |
+-----------------------------------------
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.82 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.69 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.84 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.9 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.54 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.09 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.13 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.68 seconds
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 2.33        |
+|    ep_len_mean          | 181         |
+|    ep_rew_mean          | 241         |
+| time/                   |             |
+|    fps                  | 34          |
+|    iterations           | 15          |
+|    time_elapsed         | 903         |
+|    total_timesteps      | 30720       |
+| train/                  |             |
+|    approx_kl            | 0.024633644 |
+|    clip_fraction        | 0.232       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.64       |
+|    explained_variance   | 0.616       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 7.47        |
+|    n_updates            | 135         |
+|    policy_gradient_loss | -0.0168     |
+|    std                  | 0.906       |
+|    value_loss           | 69.3        |
+-----------------------------------------
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.3 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.33 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.98 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.67 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.62 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.03 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.47 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.01 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.29 seconds
+----------------------------------------
+| rollout/                |            |
+|    avg_speed            | 2.44       |
+|    ep_len_mean          | 192        |
+|    ep_rew_mean          | 259        |
+| time/                   |            |
+|    fps                  | 34         |
+|    iterations           | 16         |
+|    time_elapsed         | 945        |
+|    total_timesteps      | 32768      |
+| train/                  |            |
+|    approx_kl            | 0.03327116 |
+|    clip_fraction        | 0.232      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.63      |
+|    explained_variance   | 0.32       |
+|    learning_rate        | 0.0003     |
+|    loss                 | 4.23       |
+|    n_updates            | 145        |
+|    policy_gradient_loss | -0.0112    |
+|    std                  | 0.897      |
+|    value_loss           | 41.9       |
+----------------------------------------
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.62 seconds
+Early stopping at step 1 due to reaching max kl: 0.10
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 13.09 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.45 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.4 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.59 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 12.7 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 13.39 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 12.31 seconds
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 2.03        |
+|    ep_len_mean          | 223         |
+|    ep_rew_mean          | 310         |
+| time/                   |             |
+|    fps                  | 35          |
+|    iterations           | 17          |
+|    time_elapsed         | 985         |
+|    total_timesteps      | 34816       |
+| train/                  |             |
+|    approx_kl            | 0.035884973 |
+|    clip_fraction        | 0.233       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.62       |
+|    explained_variance   | 0.263       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 3.47        |
+|    n_updates            | 147         |
+|    policy_gradient_loss | 0.0121      |
+|    std                  | 0.897       |
+|    value_loss           | 31.3        |
+-----------------------------------------
+Early stopping at step 0 due to reaching max kl: 0.08
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 12.37 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.04 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.02 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.69 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.14 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.44 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.46 seconds
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.42        |
+|    ep_len_mean          | 243         |
+|    ep_rew_mean          | 345         |
+| time/                   |             |
+|    fps                  | 35          |
+|    iterations           | 18          |
+|    time_elapsed         | 1026        |
+|    total_timesteps      | 36864       |
+| train/                  |             |
+|    approx_kl            | 0.026047068 |
+|    clip_fraction        | 0.267       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.62       |
+|    explained_variance   | 0.335       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 48.5        |
+|    n_updates            | 148         |
+|    policy_gradient_loss | 0.0101      |
+|    std                  | 0.898       |
+|    value_loss           | 166         |
+-----------------------------------------
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.49 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.92 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.03 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.02 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.05 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.96 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.1 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.0 seconds
+----------------------------------------
+| rollout/                |            |
+|    avg_speed            | 2.49       |
+|    ep_len_mean          | 259        |
+|    ep_rew_mean          | 372        |
+| time/                   |            |
+|    fps                  | 36         |
+|    iterations           | 19         |
+|    time_elapsed         | 1070       |
+|    total_timesteps      | 38912      |
+| train/                  |            |
+|    approx_kl            | 0.02654913 |
+|    clip_fraction        | 0.238      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.62      |
+|    explained_variance   | 0.387      |
+|    learning_rate        | 0.0003     |
+|    loss                 | 19.4       |
+|    n_updates            | 158        |
+|    policy_gradient_loss | -0.00192   |
+|    std                  | 0.895      |
+|    value_loss           | 95.7       |
+----------------------------------------
+Early stopping at step 1 due to reaching max kl: 0.08
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 12.99 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.75 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.51 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.17 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.89 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.33 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.83 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 9.95 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.15 seconds
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.95        |
+|    ep_len_mean          | 260         |
+|    ep_rew_mean          | 373         |
+| time/                   |             |
+|    fps                  | 36          |
+|    iterations           | 20          |
+|    time_elapsed         | 1107        |
+|    total_timesteps      | 40960       |
+| train/                  |             |
+|    approx_kl            | 0.034498572 |
+|    clip_fraction        | 0.248       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.61       |
+|    explained_variance   | -0.142      |
+|    learning_rate        | 0.0003      |
+|    loss                 | 139         |
+|    n_updates            | 160         |
+|    policy_gradient_loss | 0.00367     |
+|    std                  | 0.894       |
+|    value_loss           | 161         |
+-----------------------------------------
+Early stopping at step 0 due to reaching max kl: 0.09
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.38 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.05 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.4 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.32 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.69 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.32 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 11.1 seconds
+INFO:gym_donkeycar.envs.donkey_sim:New lap time: 10.35 seconds
+----------------------------------------
+| rollout/                |            |
+|    avg_speed            | 1.71       |
+|    ep_len_mean          | 280        |
+|    ep_rew_mean          | 408        |
+| time/                   |            |
+|    fps                  | 37         |
+|    iterations           | 21         |
+|    time_elapsed         | 1144       |
+|    total_timesteps      | 43008      |
+| train/                  |            |
+|    approx_kl            | 0.02007896 |
+|    clip_fraction        | 0.167      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.61      |
+|    explained_variance   | 0.112      |
+|    learning_rate        | 0.0003     |
+|    loss                 | 11.8       |
+|    n_updates            | 161        |
+|    policy_gradient_loss | 0.00771    |
+|    std                  | 0.894      |
+|    value_loss           | 53         |
+----------------------------------------
+Early stopping at step 0 due to reaching max kl: 0.13
+----------------------------------------
+| rollout/                |            |
+|    avg_speed            | 1.09       |
+|    ep_len_mean          | 281        |
+|    ep_rew_mean          | 416        |
+| time/                   |            |
+|    fps                  | 37         |
+|    iterations           | 22         |
+|    time_elapsed         | 1212       |
+|    total_timesteps      | 45056      |
+| train/                  |            |
+|    approx_kl            | 0.02799108 |
+|    clip_fraction        | 0.251      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.61      |
+|    explained_variance   | 0.0628     |
+|    learning_rate        | 0.0003     |
+|    loss                 | 38.1       |
+|    n_updates            | 162        |
+|    policy_gradient_loss | 0.0218     |
+|    std                  | 0.893      |
+|    value_loss           | 107        |
+----------------------------------------
+Early stopping at step 0 due to reaching max kl: 0.24
+----------------------------------------
+| rollout/                |            |
+|    avg_speed            | 0.763      |
+|    ep_len_mean          | 205        |
+|    ep_rew_mean          | 291        |
+| time/                   |            |
+|    fps                  | 36         |
+|    iterations           | 23         |
+|    time_elapsed         | 1292       |
+|    total_timesteps      | 47104      |
+| train/                  |            |
+|    approx_kl            | 0.10071505 |
+|    clip_fraction        | 0.448      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.61      |
+|    explained_variance   | 0.0827     |
+|    learning_rate        | 0.0003     |
+|    loss                 | 589        |
+|    n_updates            | 163        |
+|    policy_gradient_loss | 0.0945     |
+|    std                  | 0.893      |
+|    value_loss           | 1.36e+03   |
+----------------------------------------
+Early stopping at step 0 due to reaching max kl: 0.22
+----------------------------------------
+| rollout/                |            |
+|    avg_speed            | 0.621      |
+|    ep_len_mean          | 52         |
+|    ep_rew_mean          | 30.4       |
+| time/                   |            |
+|    fps                  | 35         |
+|    iterations           | 24         |
+|    time_elapsed         | 1383       |
+|    total_timesteps      | 49152      |
+| train/                  |            |
+|    approx_kl            | 0.08773109 |
+|    clip_fraction        | 0.417      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.61      |
+|    explained_variance   | 0.193      |
+|    learning_rate        | 0.0003     |
+|    loss                 | 801        |
+|    n_updates            | 164        |
+|    policy_gradient_loss | 0.0388     |
+|    std                  | 0.892      |
+|    value_loss           | 2.27e+03   |
+----------------------------------------
+Early stopping at step 0 due to reaching max kl: 0.15
+----------------------------------------
+| rollout/                |            |
+|    avg_speed            | 0.55       |
+|    ep_len_mean          | 40.8       |
+|    ep_rew_mean          | 17.7       |
+| time/                   |            |
+|    fps                  | 34         |
+|    iterations           | 25         |
+|    time_elapsed         | 1483       |
+|    total_timesteps      | 51200      |
+| train/                  |            |
+|    approx_kl            | 0.06508024 |
+|    clip_fraction        | 0.432      |
+|    clip_range           | 0.2        |
+|    entropy_loss         | -2.6       |
+|    explained_variance   | 0.632      |
+|    learning_rate        | 0.0003     |
+|    loss                 | 229        |
+|    n_updates            | 165        |
+|    policy_gradient_loss | 0.0632     |
+|    std                  | 0.892      |
+|    value_loss           | 1.29e+03   |
+----------------------------------------
+Early stopping at step 0 due to reaching max kl: 0.10
+Traceback (most recent call last):
+  File "/Users/riteshbhandari/Desktop/RF/project/mycar/train_ppo.py", line 292, in <module>
+    model.learn(
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/ppo/ppo.py", line 311, in learn
+    return super().learn(
+           ^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 324, in learn
+    continue_training = self.collect_rollouts(self.env, callback, self.rollout_buffer, n_rollout_steps=self.n_steps)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 202, in collect_rollouts
+    actions, values, log_probs = self.policy(obs_tensor)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/common/policies.py", line 656, in forward
+    log_prob = distribution.log_prob(actions)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/common/distributions.py", line 177, in log_prob
+    log_prob = self.distribution.log_prob(actions)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/torch/distributions/normal.py", line 91, in log_prob
+    var = self.scale**2
+          ~~~~~~~~~~^^~
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/torch/_tensor.py", line 32, in wrapped
+    @functools.wraps(f)
+
+KeyboardInterrupt
+Exception ignored in: <function tqdm.__del__ at 0x1137a6ca0>
+Traceback (most recent call last):
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/tqdm/std.py", line 1154, in __del__
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/tqdm/rich.py", line 124, in close
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/progress.py", line 1190, in __exit__
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/progress.py", line 1176, in stop
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/live.py", line 165, in stop
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/live.py", line 276, in refresh
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/console.py", line 1705, in print
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/console.py", line 1557, in _collect_renderables
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/protocol.py", line 27, in rich_cast
+ImportError: sys.meta_path is None, Python is likely shutting down
