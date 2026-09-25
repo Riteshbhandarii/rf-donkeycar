@@ -1,0 +1,268 @@
+starting DonkeyGym env
+Setting default: start_delay 5.0
+Setting default: cam_resolution (120, 160, 3)
+Setting default: log_level 20
+Setting default: steer_limit 1.0
+manual does not exist. you must start sim manually.
+INFO:gym_donkeycar.core.client:connecting to 127.0.0.1:9091 
+/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+loading scene warren
+WARNING:gym_donkeycar.envs.donkey_sim:waiting for sim to start..
+INFO:gym_donkeycar.envs.donkey_sim:on need car config
+INFO:gym_donkeycar.envs.donkey_sim:sending car config.
+INFO:gym_donkeycar.envs.donkey_sim:done sending cam config. {'img_w': 160, 'img_h': 120, 'img_d': 3, 'offset_x': 0.0, 'offset_y': 0.7, 'offset_z': 1.0, 'rot_x': -19.0}
+INFO:gym_donkeycar.envs.donkey_sim:sim started!
+
+===================================
+PPO MODEL TEST
+===================================
+Model: models/ppo_models/ppo_session3/checkpoints/ppo_donkey_40000_steps.zip
+Environment: donkey-warren-track-v0
+Port: 9091
+Steps: 5000
+
+step=    0 | steering=-0.018 | throttle=0.178
+step=   20 | steering=-0.127 | throttle=0.268
+step=   40 | steering=+0.086 | throttle=0.393
+step=   60 | steering=+0.122 | throttle=0.394
+step=   80 | steering=-0.388 | throttle=0.458
+step=  100 | steering=-0.233 | throttle=0.272
+step=  120 | steering=+0.022 | throttle=0.180
+step=  140 | steering=-0.054 | throttle=0.426
+step=  160 | steering=-0.029 | throttle=0.367
+step=  180 | steering=-0.063 | throttle=0.426
+step=  200 | steering=-0.312 | throttle=0.181
+step=  220 | steering=-0.190 | throttle=0.453
+step=  240 | steering=-0.052 | throttle=0.387
+step=  260 | steering=-0.207 | throttle=0.570
+step=  280 | steering=+0.040 | throttle=0.313
+step=  300 | steering=-0.352 | throttle=0.415
+step=  320 | steering=+0.089 | throttle=0.267
+step=  340 | steering=+0.235 | throttle=0.593
+step=  360 | steering=-0.109 | throttle=0.301
+step=  380 | steering=-0.028 | throttle=0.515
+step=  400 | steering=+0.213 | throttle=0.342
+step=  420 | steering=-0.235 | throttle=0.459
+step=  440 | steering=+0.028 | throttle=0.363
+step=  460 | steering=+0.005 | throttle=0.132
+step=  480 | steering=+0.220 | throttle=0.397
+step=  500 | steering=-0.101 | throttle=0.447
+step=  520 | steering=+0.034 | throttle=0.404
+step=  540 | steering=-0.003 | throttle=0.124
+step=  560 | steering=+0.026 | throttle=0.510
+step=  580 | steering=-0.017 | throttle=0.326
+step=  600 | steering=-0.378 | throttle=0.450
+step=  620 | steering=-0.024 | throttle=0.188
+step=  640 | steering=-0.231 | throttle=0.441
+step=  660 | steering=+0.051 | throttle=0.364
+step=  680 | steering=-0.278 | throttle=0.426
+step=  700 | steering=-0.078 | throttle=0.218
+step=  720 | steering=-0.179 | throttle=0.444
+step=  740 | steering=-0.085 | throttle=0.464
+step=  760 | steering=-0.054 | throttle=0.463
+step=  780 | steering=-0.164 | throttle=0.240
+step=  800 | steering=-0.326 | throttle=0.403
+step=  820 | steering=-0.002 | throttle=0.291
+step=  840 | steering=-0.145 | throttle=0.355
+step=  860 | steering=+0.027 | throttle=0.388
+step=  880 | steering=-0.021 | throttle=0.179
+step=  900 | steering=-0.095 | throttle=0.372
+step=  920 | steering=+0.001 | throttle=0.405
+step=  940 | steering=-0.133 | throttle=0.369
+step=  960 | steering=+0.401 | throttle=0.000
+step=  980 | steering=+0.077 | throttle=0.420
+step= 1000 | steering=-0.169 | throttle=0.504
+step= 1020 | steering=+0.060 | throttle=0.417
+step= 1040 | steering=-0.178 | throttle=0.377
+step= 1060 | steering=-0.165 | throttle=0.377
+step= 1080 | steering=-0.134 | throttle=0.257
+step= 1100 | steering=+0.117 | throttle=0.483
+step= 1120 | steering=-0.016 | throttle=0.470
+step= 1140 | steering=+0.211 | throttle=0.319
+step= 1160 | steering=-0.250 | throttle=0.218
+step= 1180 | steering=-0.015 | throttle=0.188
+step= 1200 | steering=-0.035 | throttle=0.424
+step= 1220 | steering=+0.117 | throttle=0.407
+step= 1240 | steering=-0.093 | throttle=0.390
+step= 1260 | steering=+0.108 | throttle=0.024
+step= 1280 | steering=+0.066 | throttle=0.394
+step= 1300 | steering=+0.049 | throttle=0.378
+step= 1320 | steering=+0.026 | throttle=0.426
+step= 1340 | steering=+0.047 | throttle=0.124
+step= 1360 | steering=-0.450 | throttle=0.464
+step= 1380 | steering=+0.175 | throttle=0.354
+step= 1400 | steering=-0.342 | throttle=0.391
+step= 1420 | steering=-0.219 | throttle=0.450
+step= 1440 | steering=+0.006 | throttle=0.129
+step= 1460 | steering=+0.033 | throttle=0.411
+step= 1480 | steering=+0.058 | throttle=0.424
+step= 1500 | steering=+0.125 | throttle=0.333
+step= 1520 | steering=+0.210 | throttle=0.440
+step= 1540 | steering=-0.614 | throttle=0.161
+step= 1560 | steering=+0.035 | throttle=0.132
+step= 1580 | steering=-0.170 | throttle=0.433
+step= 1600 | steering=+0.093 | throttle=0.321
+step= 1620 | steering=+0.101 | throttle=0.556
+step= 1640 | steering=+0.042 | throttle=0.203
+step= 1660 | steering=-0.087 | throttle=0.440
+step= 1680 | steering=+0.170 | throttle=0.300
+step= 1700 | steering=+0.091 | throttle=0.413
+step= 1720 | steering=-0.004 | throttle=0.195
+step= 1740 | steering=+0.088 | throttle=0.123
+step= 1760 | steering=+0.006 | throttle=0.437
+step= 1780 | steering=+0.214 | throttle=0.417
+step= 1800 | steering=-0.348 | throttle=0.392
+step= 1820 | steering=+0.046 | throttle=0.172
+step= 1840 | steering=-0.078 | throttle=0.479
+step= 1860 | steering=+0.015 | throttle=0.341
+step= 1880 | steering=-0.024 | throttle=0.438
+step= 1900 | steering=+0.131 | throttle=0.092
+step= 1920 | steering=-0.211 | throttle=0.441
+step= 1940 | steering=-0.025 | throttle=0.249
+step= 1960 | steering=-0.034 | throttle=0.594
+step= 1980 | steering=-0.032 | throttle=0.272
+step= 2000 | steering=+0.059 | throttle=0.426
+step= 2020 | steering=+0.060 | throttle=0.345
+step= 2040 | steering=+0.038 | throttle=0.151
+step= 2060 | steering=+0.087 | throttle=0.457
+step= 2080 | steering=+0.093 | throttle=0.429
+step= 2100 | steering=-0.126 | throttle=0.343
+step= 2120 | steering=+0.018 | throttle=0.190
+step= 2140 | steering=+0.014 | throttle=0.414
+step= 2160 | steering=-0.157 | throttle=0.451
+step= 2180 | steering=+0.068 | throttle=0.569
+step= 2200 | steering=+0.135 | throttle=0.193
+step= 2220 | steering=-0.042 | throttle=0.480
+step= 2240 | steering=+0.035 | throttle=0.249
+step= 2260 | steering=-0.131 | throttle=0.632
+step= 2280 | steering=-0.217 | throttle=0.315
+step= 2300 | steering=-0.293 | throttle=0.433
+step= 2320 | steering=-0.102 | throttle=0.327
+step= 2340 | steering=-0.018 | throttle=0.178
+step= 2360 | steering=-0.287 | throttle=0.357
+step= 2380 | steering=+0.005 | throttle=0.420
+step= 2400 | steering=-0.213 | throttle=0.267
+step= 2420 | steering=+0.419 | throttle=0.001
+step= 2440 | steering=-0.115 | throttle=0.424
+step= 2460 | steering=-0.255 | throttle=0.460
+step= 2480 | steering=+0.010 | throttle=0.432
+step= 2500 | steering=-0.120 | throttle=0.239
+step= 2520 | steering=-0.469 | throttle=0.489
+step= 2540 | steering=-0.191 | throttle=0.363
+step= 2560 | steering=-0.006 | throttle=0.453
+step= 2580 | steering=+0.062 | throttle=0.207
+step= 2600 | steering=-0.192 | throttle=0.454
+step= 2620 | steering=-0.106 | throttle=0.367
+step= 2640 | steering=+0.030 | throttle=0.473
+step= 2660 | steering=-0.260 | throttle=0.337
+step= 2680 | steering=-0.372 | throttle=0.462
+step= 2700 | steering=-0.217 | throttle=0.328
+step= 2720 | steering=-0.167 | throttle=0.487
+step= 2740 | steering=-0.168 | throttle=0.271
+step= 2760 | steering=+0.129 | throttle=0.508
+step= 2780 | steering=-0.103 | throttle=0.326
+step= 2800 | steering=+0.443 | throttle=0.000
+step= 2820 | steering=+0.021 | throttle=0.428
+step= 2840 | steering=-0.089 | throttle=0.428
+step= 2860 | steering=-0.006 | throttle=0.395
+step= 2880 | steering=+0.314 | throttle=0.480
+step= 2900 | steering=-0.381 | throttle=0.275
+step= 2920 | steering=-0.139 | throttle=0.255
+step= 2940 | steering=-0.079 | throttle=0.487
+step= 2960 | steering=+0.061 | throttle=0.432
+step= 2980 | steering=-0.018 | throttle=0.178
+step= 3000 | steering=-0.003 | throttle=0.397
+step= 3020 | steering=+0.159 | throttle=0.436
+step= 3040 | steering=+0.054 | throttle=0.367
+step= 3060 | steering=-0.038 | throttle=0.134
+step= 3080 | steering=+0.018 | throttle=0.381
+step= 3100 | steering=+0.012 | throttle=0.383
+step= 3120 | steering=-0.068 | throttle=0.337
+step= 3140 | steering=+0.215 | throttle=0.329
+step= 3160 | steering=+0.018 | throttle=0.355
+step= 3180 | steering=-0.152 | throttle=0.280
+step= 3200 | steering=-0.477 | throttle=0.423
+step= 3220 | steering=+0.153 | throttle=0.335
+step= 3240 | steering=-0.041 | throttle=0.417
+step= 3260 | steering=+0.085 | throttle=0.205
+step= 3280 | steering=-0.222 | throttle=0.417
+step= 3300 | steering=-0.102 | throttle=0.470
+step= 3320 | steering=-0.058 | throttle=0.489
+step= 3340 | steering=+0.073 | throttle=0.210
+step= 3360 | steering=+0.000 | throttle=0.511
+step= 3380 | steering=-0.466 | throttle=0.415
+step= 3400 | steering=-0.081 | throttle=0.644
+step= 3420 | steering=+0.088 | throttle=0.336
+step= 3440 | steering=+0.147 | throttle=0.506
+step= 3460 | steering=-0.002 | throttle=0.345
+step= 3480 | steering=-0.014 | throttle=0.152
+step= 3500 | steering=+0.185 | throttle=0.440
+step= 3520 | steering=+0.146 | throttle=0.373
+step= 3540 | steering=+0.048 | throttle=0.355
+step= 3560 | steering=+0.094 | throttle=0.458
+step= 3580 | steering=+0.383 | throttle=0.446
+step= 3600 | steering=+0.073 | throttle=0.103
+step= 3620 | steering=-0.283 | throttle=0.404
+step= 3640 | steering=-0.116 | throttle=0.369
+step= 3660 | steering=-0.123 | throttle=0.577
+step= 3680 | steering=-0.114 | throttle=0.279
+step= 3700 | steering=+0.003 | throttle=0.438
+step= 3720 | steering=+0.055 | throttle=0.418
+step= 3740 | steering=-0.021 | throttle=0.179
+step= 3760 | steering=+0.197 | throttle=0.322
+step= 3780 | steering=-0.301 | throttle=0.487
+step= 3800 | steering=+0.018 | throttle=0.361
+step= 3820 | steering=+0.485 | throttle=0.000
+step= 3840 | steering=+0.042 | throttle=0.473
+step= 3860 | steering=-0.013 | throttle=0.461
+step= 3880 | steering=+0.005 | throttle=0.463
+step= 3900 | steering=-0.117 | throttle=0.263
+step= 3920 | steering=-0.281 | throttle=0.452
+step= 3940 | steering=+0.107 | throttle=0.329
+step= 3960 | steering=-0.018 | throttle=0.178
+step= 3980 | steering=-0.434 | throttle=0.432
+step= 4000 | steering=+0.139 | throttle=0.388
+step= 4020 | steering=-0.110 | throttle=0.329
+step= 4040 | steering=-0.099 | throttle=0.160
+step= 4060 | steering=-0.052 | throttle=0.435
+step= 4080 | steering=-0.255 | throttle=0.521
+step= 4100 | steering=+0.118 | throttle=0.296
+step= 4120 | steering=-0.368 | throttle=0.227
+step= 4140 | steering=-0.018 | throttle=0.178
+step= 4160 | steering=-0.386 | throttle=0.370
+step= 4180 | steering=+0.298 | throttle=0.432
+step= 4200 | steering=-0.045 | throttle=0.364
+step= 4220 | steering=-0.188 | throttle=0.568
+step= 4240 | steering=-0.429 | throttle=0.297
+step= 4260 | steering=+0.212 | throttle=0.505
+step= 4280 | steering=+0.068 | throttle=0.384
+step= 4300 | steering=-0.005 | throttle=0.120
+step= 4320 | steering=-0.132 | throttle=0.474
+step= 4340 | steering=-0.220 | throttle=0.430
+step= 4360 | steering=-0.562 | throttle=0.437
+step= 4380 | steering=-0.164 | throttle=0.110
+step= 4400 | steering=-0.246 | throttle=0.450
+step= 4420 | steering=+0.072 | throttle=0.346
+step= 4440 | steering=+0.056 | throttle=0.568
+step= 4460 | steering=-0.010 | throttle=0.366
+step= 4480 | steering=-0.149 | throttle=0.504
+step= 4500 | steering=+0.004 | throttle=0.321
+step= 4520 | steering=+0.068 | throttle=0.457
+step= 4540 | steering=-0.097 | throttle=0.222
+step= 4560 | steering=-0.421 | throttle=0.454
+step= 4580 | steering=-0.024 | throttle=0.273
+step= 4600 | steering=+0.052 | throttle=0.481
+step= 4620 | steering=+0.084 | throttle=0.105
+step= 4640 | steering=-0.284 | throttle=0.400
+step= 4660 | steering=-0.275 | throttle=0.240
+step= 4680 | steering=-0.311 | throttle=0.508
+step= 4700 | steering=-0.459 | throttle=0.306
+step= 4720 | steering=+0.068 | throttle=0.452
+step= 4740 | steering=-0.060 | throttle=0.384
+step= 4760 | steering=+0.241 | throttle=0.056
+
+Test interrupted.
+Test finished.
