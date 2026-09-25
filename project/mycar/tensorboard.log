@@ -1,0 +1,3 @@
+TensorFlow installation not found - running with reduced feature set.
+E0925 09:16:11.670453 8397012416 program.py:300] TensorBoard could not bind to port 6007, it was already in use
+ERROR: TensorBoard could not bind to port 6007,TensorBoard caught SIGTERM; exiting...
