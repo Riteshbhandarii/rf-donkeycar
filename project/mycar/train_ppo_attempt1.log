@@ -1,0 +1,195 @@
+starting DonkeyGym env
+Setting default: start_delay 5.0
+Setting default: cam_resolution (120, 160, 3)
+Setting default: log_level 20
+Setting default: steer_limit 1.0
+manual does not exist. you must start sim manually.
+INFO:gym_donkeycar.core.client:connecting to 127.0.0.1:9091 
+/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/spaces/box.py:236: UserWarning: [33mWARN: Box low's precision lowered by casting to float32, current low.dtype=float64[0m
+  gym.logger.warn(
+/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/spaces/box.py:306: UserWarning: [33mWARN: Box high's precision lowered by casting to float32, current high.dtype=float64[0m
+  gym.logger.warn(
+loading scene generated_road
+WARNING:gym_donkeycar.envs.donkey_sim:waiting for sim to start..
+INFO:gym_donkeycar.envs.donkey_sim:on need car config
+INFO:gym_donkeycar.envs.donkey_sim:sending car config.
+INFO:gym_donkeycar.envs.donkey_sim:done sending cam config. {'img_w': 160, 'img_h': 120, 'img_d': 3, 'offset_x': 0.0, 'offset_y': 0.7, 'offset_z': 1.0, 'rot_x': -19.0}
+INFO:gym_donkeycar.envs.donkey_sim:sim started!
+
+Creating new PPO model...
+Using mps device
+
+===================================
+PPO TRAINING
+===================================
+Environment: donkey-generated-roads-v0
+Timesteps: 100000
+N steps: 2048
+Batch size: 64
+Learning rate: 0.0003
+Output: ppo_session3
+
+Logging to models/ppo_models/ppo_session3/tb_logs/ppo_session3_0
+---------------------------------
+| rollout/           |          |
+|    avg_speed       | 1.17     |
+|    ep_len_mean     | 101      |
+|    ep_rew_mean     | 78.3     |
+| time/              |          |
+|    fps             | 15       |
+|    iterations      | 1        |
+|    time_elapsed    | 130      |
+|    total_timesteps | 2048     |
+---------------------------------
+------------------------------------------
+| rollout/                |              |
+|    avg_speed            | 1.08         |
+|    ep_len_mean          | 94.8         |
+|    ep_rew_mean          | 73.7         |
+| time/                   |              |
+|    fps                  | 14           |
+|    iterations           | 2            |
+|    time_elapsed         | 273          |
+|    total_timesteps      | 4096         |
+| train/                  |              |
+|    approx_kl            | 0.0019461454 |
+|    clip_fraction        | 0.0335       |
+|    clip_range           | 0.2          |
+|    entropy_loss         | -2.85        |
+|    explained_variance   | 0.00437      |
+|    learning_rate        | 0.0003       |
+|    loss                 | 7.88         |
+|    n_updates            | 10           |
+|    policy_gradient_loss | -0.00159     |
+|    std                  | 1.01         |
+|    value_loss           | 29           |
+------------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 0.903       |
+|    ep_len_mean          | 94          |
+|    ep_rew_mean          | 78          |
+| time/                   |             |
+|    fps                  | 14          |
+|    iterations           | 3           |
+|    time_elapsed         | 410         |
+|    total_timesteps      | 6144        |
+| train/                  |             |
+|    approx_kl            | 0.007309918 |
+|    clip_fraction        | 0.0587      |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.86       |
+|    explained_variance   | 0.571       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 8.54        |
+|    n_updates            | 20          |
+|    policy_gradient_loss | -0.00962    |
+|    std                  | 1.01        |
+|    value_loss           | 32.3        |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.27        |
+|    ep_len_mean          | 102         |
+|    ep_rew_mean          | 91.3        |
+| time/                   |             |
+|    fps                  | 15          |
+|    iterations           | 4           |
+|    time_elapsed         | 537         |
+|    total_timesteps      | 8192        |
+| train/                  |             |
+|    approx_kl            | 0.016727287 |
+|    clip_fraction        | 0.116       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.85       |
+|    explained_variance   | 0.674       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 25.3        |
+|    n_updates            | 30          |
+|    policy_gradient_loss | -0.0127     |
+|    std                  | 1.01        |
+|    value_loss           | 55.8        |
+-----------------------------------------
+-----------------------------------------
+| rollout/                |             |
+|    avg_speed            | 1.54        |
+|    ep_len_mean          | 109         |
+|    ep_rew_mean          | 102         |
+| time/                   |             |
+|    fps                  | 15          |
+|    iterations           | 5           |
+|    time_elapsed         | 662         |
+|    total_timesteps      | 10240       |
+| train/                  |             |
+|    approx_kl            | 0.011886079 |
+|    clip_fraction        | 0.167       |
+|    clip_range           | 0.2         |
+|    entropy_loss         | -2.85       |
+|    explained_variance   | 0.632       |
+|    learning_rate        | 0.0003      |
+|    loss                 | 25.1        |
+|    n_updates            | 40          |
+|    policy_gradient_loss | -0.0117     |
+|    std                  | 1           |
+|    value_loss           | 79          |
+-----------------------------------------
+Traceback (most recent call last):
+  File "/Users/riteshbhandari/Desktop/RF/project/mycar/train_ppo.py", line 292, in <module>
+    model.learn(
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/ppo/ppo.py", line 311, in learn
+    return super().learn(
+           ^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 324, in learn
+    continue_training = self.collect_rollouts(self.env, callback, self.rollout_buffer, n_rollout_steps=self.n_steps)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/common/on_policy_algorithm.py", line 218, in collect_rollouts
+    new_obs, rewards, dones, infos = env.step(clipped_actions)
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/common/vec_env/base_vec_env.py", line 222, in step
+    return self.step_wait()
+           ^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/common/vec_env/vec_transpose.py", line 96, in step_wait
+    observations, rewards, dones, infos = self.venv.step_wait()
+                                          ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/common/vec_env/dummy_vec_env.py", line 59, in step_wait
+    obs, self.buf_rews[env_idx], terminated, truncated, self.buf_infos[env_idx] = self.envs[env_idx].step(  # type: ignore[assignment]
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/stable_baselines3/common/monitor.py", line 94, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+                                                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/project/mycar/train_ppo.py", line 133, in step
+    obs, _, terminated, truncated, info = self.env.step(action)
+                                          ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/core.py", line 560, in step
+    observation, reward, terminated, truncated, info = self.env.step(action)
+                                                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/wrappers/common.py", line 393, in step
+    return super().step(action)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/core.py", line 327, in step
+    return self.env.step(action)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gymnasium/wrappers/common.py", line 285, in step
+    return self.env.step(action)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gym_donkeycar/envs/donkey_env.py", line 138, in step
+    observation, reward, done, info = self.viewer.observe()
+                                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gym_donkeycar/envs/donkey_sim.py", line 109, in observe
+    return self.handler.observe()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/gym_donkeycar/envs/donkey_sim.py", line 436, in observe
+    time.sleep(0.001)
+KeyboardInterrupt
+Exception ignored in: <function tqdm.__del__ at 0x1110a2ca0>
+Traceback (most recent call last):
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/tqdm/std.py", line 1154, in __del__
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/tqdm/rich.py", line 124, in close
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/progress.py", line 1190, in __exit__
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/progress.py", line 1176, in stop
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/live.py", line 165, in stop
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/live.py", line 276, in refresh
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/console.py", line 1705, in print
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/console.py", line 1557, in _collect_renderables
+  File "/Users/riteshbhandari/Desktop/RF/.venv-mac/lib/python3.12/site-packages/rich/protocol.py", line 27, in rich_cast
+ImportError: sys.meta_path is None, Python is likely shutting down
