@@ -6,3 +6,4 @@ DonkeySimMac.zip
 CourseSim/
 *.pptx
 project/mycar/data/
+*_buffer.pkl
