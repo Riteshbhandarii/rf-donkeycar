@@ -96,7 +96,7 @@ Intermediate checkpoints and replay buffers are not committed (25 MB and 257 MB 
 
 ## Limitations
 
-- Not yet tested on the real car. Training ran at about 11 steps/s; the car's control loop runs at 20 Hz.
+- Not yet tested on the real car. Training ran at about 11 steps/s; DonkeyCar's default drive loop is 20 Hz (`config.py`), and the rate of the car's ONNX inference script is not confirmed.
 - The agent can drift toward the road edge and not recover, and can take the wrong branch at a road fork.
 - It drives cautiously, often with throttle below 0.1. Real top speed and steering range depend on the car's calibration.
 
