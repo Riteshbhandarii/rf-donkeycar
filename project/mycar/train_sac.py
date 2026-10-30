@@ -73,7 +73,7 @@ GAMMA = 0.99                    # default: 0.99
 TRAIN_FREQ = 1                  # default: 1
 GRADIENT_STEPS = 1              # default: 1
 ENT_COEF = "auto"               # default: "auto"
-CHECKPOINT_FREQ = 25000         # default: no default
+CHECKPOINT_FREQ = 10000         # default: no default
 
 # ============================================================
 # DONKEY SIM CONFIGURATION
@@ -217,7 +217,7 @@ class AppearanceJitterWrapper(gym.ObservationWrapper):
 
 class SimpleRewardWrapper(gym.Wrapper):
     def __init__(self, env, max_cte=6.0, center_sigma=1.1, target_speed=1.5,
-                 survival_bonus=0.05, steering_penalty=0.10):
+                 survival_bonus=0.05, steering_penalty=0.30):
         super().__init__(env)
         self.max_cte, self.center_sigma = max_cte, center_sigma
         self.target_speed = target_speed
