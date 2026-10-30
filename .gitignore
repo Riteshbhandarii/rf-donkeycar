@@ -7,3 +7,6 @@ CourseSim/
 *.pptx
 project/mycar/data/
 *_buffer.pkl
+
+# Intermediate SAC checkpoints are large; keep only chosen models
+project/mycar/models/sac_models/sac_a*/checkpoints/
