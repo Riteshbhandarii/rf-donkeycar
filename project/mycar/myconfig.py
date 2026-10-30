@@ -32,7 +32,7 @@
 # # 'D435': Intel Realsense D435
 # # 'OAKD': Luxonis OAK-D
 # # 'MOCK': Simulation/Testing or when using GPS path following
-# CAMERA_TYPE = "PICAM"
+CAMERA_TYPE = "MOCK"
 # 
 # # The resolution of the input image. Higher resolution needs more processing power.
 # IMAGE_W = 160
@@ -101,7 +101,7 @@
 # # ------------------------------------------------------------------------------
 # 
 # # If True, the joystick is enabled by default without needing '--js' flag.
-# USE_JOYSTICK_AS_DEFAULT = True
+USE_JOYSTICK_AS_DEFAULT = False
 # 
 # # The maximum throttle output (0.0 to 1.0) allowed by the joystick.
 # # Useful for limiting speed for beginners.
@@ -121,7 +121,7 @@
 # 
 # # The type of controller being used.
 # # Options: 'ps3', 'ps4', 'xbox', 'nimbus', 'wiiu', 'F710', 'rc3', 'MM1 (use for RC Hat)', 'custom'
-# CONTROLLER_TYPE = 'xbox'
+CONTROLLER_TYPE = 'ps4'
 # 
 # # Enable listening for remote joystick control over the network.
 # USE_NETWORKED_JS = False
@@ -457,13 +457,13 @@
 # # tensorflow models: (linear|categorical|tflite_linear|tensorrt_linear)
 # # pytorch models: (resnet18)
 # # The AI framework to use (tensorflow|pytorch).
-# DEFAULT_AI_FRAMEWORK = 'tensorflow'
+DEFAULT_AI_FRAMEWORK = 'pytorch'
 # 
 # # The architecture of the model to use.
 # # 'linear': Standard regression (predicts steer/throttle floats)
 # # 'categorical': Classification (bins steer/throttle into categories)
 # # 'resnet18': Pytorch heavy model
-# DEFAULT_MODEL_TYPE = 'linear'
+DEFAULT_MODEL_TYPE = 'resnet18'
 # 
 # # Number of training samples per pass.
 # BATCH_SIZE = 128
@@ -756,13 +756,13 @@
 # # RECORDING & LOGGING
 # 
 # # Automatically record data when throttle is > 0 (Standard training data collection).
-# AUTO_RECORD_ON_THROTTLE = True
+AUTO_RECORD_ON_THROTTLE = False
 # 
 # # Record data even when the AI is driving (Careful: don't train on this data!).
 # RECORD_DURING_AI = False
 # 
 # # Create a new directory for every session (True) or append to existing (False).
-# AUTO_CREATE_NEW_TUB = False
+AUTO_CREATE_NEW_TUB = True
 # 
 # # Console logging settings.
 # HAVE_CONSOLE_LOGGING = True
@@ -794,16 +794,35 @@
 # #This enables that, and sets the path to the simualator and the environment.
 # #You will want to download the simulator binary from: https://github.com/tawnkramer/donkey_gym/releases/download/v18.9/DonkeySimLinux.zip
 # #then extract that and modify DONKEY_SIM_PATH.
-# 
+#
+# ENVS:
+#   donkey-generated-track-v0:
+#   donkey-generated-roads-v0:
+#
 # # Settings for connecting to the Donkey Gym Unity simulator.
-# DONKEY_GYM = False
-# DONKEY_SIM_PATH = "path to sim"
-# DONKEY_GYM_ENV_NAME = "donkey-generated-track-v0"
-# GYM_CONF = { "body_style" : "donkey", "body_rgb" : (128, 128, 128), "car_name" : "car", "font_size" : 100}
+DONKEY_GYM = True
+DONKEY_SIM_PATH = "remote"
+DONKEY_GYM_ENV_NAME = "donkey-generated-track-v0"
+GYM_CONF = { "body_style" : "donkey", 
+            "body_rgb" : (128, 128, 128), 
+            "car_name" : "car", 
+            "font_size" : 100,
+            "host": "host.docker.internal",
+            "port": 9091,
+            "cam_config": {
+            "img_w": 160,
+            "img_h": 120,
+            "img_d": 3,
+            "offset_x": 0.0,
+            "offset_y": 0.7,
+            "offset_z": 1.0,
+            "rot_x": -19.0,
+    },
+            }
 # GYM_CONF["racer_name"] = "Your Name"
 # GYM_CONF["country"] = "Place"
 # GYM_CONF["bio"] = "I race robots."
-# SIM_HOST = "127.0.0.1"
+SIM_HOST = "host.docker.internal"
 # SIM_ARTIFICIAL_LATENCY = 0
 # SIM_RECORD_LOCATION = False
 # SIM_RECORD_GYROACCEL = False
@@ -827,10 +846,3 @@
 # # 'local_angle': AI Steering, Human Throttle
 # # 'local': AI Steering and Throttle
 # WEB_INIT_MODE = "user"
-
-DONKEY_GYM = True
-DONKEY_SIM_PATH = "remote"
-DONKEY_GYM_ENV_NAME = "donkey-warren-track-v0"
-SIM_HOST = "host.docker.internal"
-
-USE_JOYSTICK_AS_DEFAULT = False

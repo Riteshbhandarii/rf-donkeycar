@@ -14,7 +14,7 @@ import numpy as np
 # ==============================================================
 
 # Rows to remove from the top of the image (sky / horizon / background).
-CROP_TOP = 70
+CROP_TOP = 80
 
 # Grayscale channel weights (standard luma / ITU-R BT.601 weights,
 # same ones OpenCV's cv2.cvtColor(..., COLOR_RGB2GRAY) uses).
