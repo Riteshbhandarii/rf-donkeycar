@@ -337,10 +337,12 @@ if args.test:
     model = SAC.load(model_path, env=env, device=DEVICE)
     obs = env.reset()
 
+    step, crashes, laps, ep_laps = -1, 0, 0, 0
     try:
         for step in range(args.test_steps):
             action, _states = model.predict(obs, deterministic=True)
             obs, reward, done, info = env.step(action)
+            ep_laps = info[0].get("lap_count", 0)
 
             if step % 20 == 0:
                 steering = float(action[0][0])
@@ -348,6 +350,10 @@ if args.test:
                 print(f"step={step:5d} | steering={steering:+.3f} | throttle={throttle:.3f}")
 
             if done[0]:
+                crashes += 1
+                laps += ep_laps
+                ep_laps = 0
+                print(f"step={step:5d} | episode ended (crash or off track)")
                 obs = env.reset()
 
     except KeyboardInterrupt:
@@ -355,7 +361,8 @@ if args.test:
     finally:
         env.close()
 
-    print("Test finished.")
+    laps += ep_laps
+    print(f"Test finished. Steps: {step + 1} | crashes: {crashes} | laps: {laps}")
     exit(0)
 
 # ============================================================

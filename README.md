@@ -4,6 +4,41 @@ Reinforcement learning for a self-driving DonkeyCar. Models are trained in the D
 
 **Result:** a SAC agent trained for 150k steps on randomly generated roads drives the **Warren track, which it never saw in training, for 3 full laps** in a deterministic test.
 
+## Goal
+
+**End goal:** the exported model drives the physical DonkeyCar around the course track.
+
+The real track cannot be tested from the simulator, so the simulator goal is a model that drives **a track and conditions it never trained on**. Training reward is not the target: SAC samples random actions during training, so training always looks worse than the deterministic test.
+
+### Success criteria (simulator, before the car)
+
+| # | Criterion | Status |
+|---|---|---|
+| 1 | Warren (held out), sim options GenerateTrees, GenerateRandomCones and Light Challenge **on**: 3 laps in 3000 steps, 0 crashes | Not tested yet |
+| 2 | Warren, sim options off: 3 laps in 3000 steps, 0 crashes | 150k: 3 laps (crashes not counted) |
+| 3 | No repeated full-left/full-right steering on straights in `--test` | 150k: met by eye |
+| 4 | ONNX export matches PyTorch | 150k: met (max diff 7e-7) |
+
+Shadows, chairs and changing light are what make criterion 1 the closest stand-in for a real room. Then the car stage: calibrate, test 2–3 exported candidates, count laps on the physical track.
+
+### Evaluation protocol
+
+Run the same test every 20k steps so results are comparable:
+
+1. Put the simulator at its main menu and set the sim options for the criterion.
+2. `python train_sac.py --test --load <model.zip> --env_name donkey-warren-track-v0 --test_steps 3000`
+3. Copy the last line, `Test finished. Steps: 3000 | crashes: N | laps: N`, into the log below. Laps are counted by the simulator's start line.
+4. Note where it fails, if it does.
+
+Warren is never used for training. Change one or two things between runs.
+
+### Evaluation log
+
+| Model | Steps | Sim options | Laps | Crashes | Notes |
+|---|---|---|---|---|---|
+| `sac_a3_road3` | 100k | not recorded | 0 | not counted | Most of a lap, then goes straight at one turn |
+| `sac_a4_150k` | 150k | not recorded | 3 | not counted | Smooth, mostly centred |
+
 ## Results
 
 All runs use SAC with a CNN policy and continue from the previous run (`--load`). Results are from `--test`, which drives deterministically without training noise or image jitter.
