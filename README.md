@@ -1,160 +1,105 @@
 # rf-donkeycar
 
-Self-driving experiments for DonkeyCar in the Donkey simulator (`gym_donkeycar`).
+Reinforcement learning for a self-driving DonkeyCar. Models are trained in the Donkey simulator (`gym_donkeycar`) with stable-baselines3 and exported to ONNX to run on the real car.
 
-## What's here
+**Result:** a SAC agent trained for 150k steps on randomly generated roads drives the **Warren track, which it never saw in training, for 3 full laps** in a deterministic test.
 
-| Path | What it is |
-|---|---|
-| `project/mycar/train_ppo.py` | PPO training and testing with stable-baselines3 |
-| `project/mycar/train_sac.py` | SAC training and testing for the real-car pipeline (see [Real-car SAC](#real-car-sac-2026-10-30)) |
-| `project/mycar/train_sac_zoo.py` | Earlier SAC script (Sessions 4–6): `--fast`, `--zoo`, `--reward`, `--lr/--gamma/--tau` overrides |
-| `project/mycar/export_onnx.py` | Exports a trained BC/PPO/SAC model to ONNX for the car and checks PyTorch vs ONNX outputs |
-| `project/mycar/compare_runs.py` | Plots reward, episode length and speed of PPO/SAC runs on one PNG |
-| `train_bc.py` | Behavioural cloning training in PyTorch |
-| `project/mycar/manage.py`, `train.py`, `calibrate.py`, `config.py`, `myconfig.py` | Standard DonkeyCar car app scripts and config |
-| `project/mycar/preprocessing.py` | Crop and grayscale, shared by training and the car's ONNX inference |
-| `project/mycar/models/ppo_models/ppo_session3/checkpoints/` | PPO checkpoints at 20k and 40k steps |
-| `project/mycar/models/ppo_models/*/tb_logs/` | TensorBoard logs |
-| `project/mycar/models/sac_models/<name>/` | SAC output: `checkpoints/` (`sac_donkey_<N>_steps.zip` + `_buffer.pkl`), `tb_logs/`, final model |
-| `project/mycar/*.log` | Training and test run output |
-| `project/mycar/eta.sh` | Prints training progress and ETA from a training log |
-| `dockerfile`, `compose.yml`, `compose.mac.yml`, `entrypoint.sh` | Docker environment |
-| `MAC-SETUP.md` | Running natively on macOS |
-| `requirements.txt` | Python dependencies |
+## Results
 
-## Running the PPO model
+All runs use SAC with a CNN policy and continue from the previous run (`--load`). Results are from `--test`, which drives deterministically without training noise or image jitter.
 
-Start the Donkey simulator first. The script connects to it on port 9091.
-
-```
-cd project/mycar
-python -u train_ppo.py --test --load models/ppo_models/ppo_session3/checkpoints/ppo_donkey_40000_steps.zip
-```
-
-Add `--env_name donkey-warren-track-v0` for the Warren track. The default is `donkey-generated-roads-v0`.
-
-Train a new model:
-
-```
-python train_ppo.py --output <model_name>
-```
-
-It saves checkpoints under `models/ppo_models/<model_name>/`.
-
-View training curves:
-
-```
-tensorboard --logdir models/ppo_models/
-```
-
-## Session 4: SAC
-
-Checklist:
-
-- [ ] `train_sac.py` is in `project/mycar/` (newest version from ITSLearning)
-- [ ] Simulator open, timescale 2-4, "Generated Road" scene
-- [ ] Training started with `--output <name>`; it keeps running while you regen the track or switch scenes, as long as the simulator stays open
-- [ ] TensorBoard open on `models/sac_models/`; then on `models/` to compare PPO and SAC
-- [ ] New road generated after the car clears the track twice in a row (or if the road is bad, e.g. overlapping)
-- [ ] Resumed once from a checkpoint (`--load`, buffer is picked up automatically)
-- [ ] Tested with `--test` (no buffer needed)
-- [ ] Wiggling on the centre line, or car stalls in `--test` but drove fine in training: change the reward, one modification at a time, retrain
-
-Train (start the simulator first):
-
-```
-cd project/mycar
-python -u train_sac.py --output sactest
-```
-
-Resume from a checkpoint (loads the matching `_buffer.pkl` from the same folder; use a new `--output` or the old name to overwrite):
-
-```
-python -u train_sac.py --load models/sac_models/sactest/checkpoints/sac_donkey_50000_steps.zip --output sactest2
-```
-
-Test (buffer not needed, so the model file can be copied alone):
-
-```
-python -u train_sac.py --test --load models/sac_models/sactest/checkpoints/sac_donkey_50000_steps.zip
-```
-
-TensorBoard, http://localhost:6006/ (add `--bind_all` inside Docker):
-
-```
-tensorboard --logdir models/sac_models/     # SAC only
-tensorboard --logdir models/                # SAC vs PPO
-```
-
-Or without a browser, one PNG with reward, episode length and speed per run:
-
-```
-python compare_runs.py                                  # all runs under models/ppo_models and models/sac_models
-python compare_runs.py models/ppo_models/ppo_session3 models/sac_models/sactest --out cmp.png
-```
-
-Both scripts log `rollout/avg_speed`, so the speed curves are comparable. Sharp drops after a track regen or a resume are normal; a drop that never recovers means a corrupted run, so resume from the last good checkpoint.
-
-Reward (`train_sac_zoo.py` only): `--reward smooth` targets the "drives in training, stands still in --test" problem: stalling on track costs -0.1 instead of 0, and the +0.2 survival bonus only pays when moving near the centre line. Steering smoothness is in both rewards. It is opt-in; the default reward is the instructor's, unchanged.
-
-## Real-car SAC (2026-10-30)
-
-`train_sac.py`, `preprocessing.py`, `myconfig.py` and `export_onnx.py` are the course's real-car pipeline. The sim renders 640×480, the frame is area-averaged to 160×120 like the real camera, then `preprocessing.py` crops the top 80 rows and converts to grayscale, giving a 40×160 image. The same `preprocessing.py` runs on the car (ONNX runtime on the Jetson), so it must not change on one side only. Camera-pose and appearance jitter run in training only.
-
-Trained natively on an M-series MacBook (MPS) with the `CourseSim2Mac` simulator.
-
-### What changed from the handed-out script
-
-| Commit | Change |
-|---|---|
-| `6406108` | macOS support only: MPS device, sim on `127.0.0.1`. Hyperparameters unchanged. |
-| `089bdfe` | `steering_penalty` 0.10 → 0.30, `CHECKPOINT_FREQ` 25k → 10k |
-
-The steering penalty is charged on the change in steering between steps. At 0.10 a full left-to-right flip cost about 0.18 reward against a best step of about 1.05, so the agent steered bang-bang. At 0.30 the flip costs about 0.54 while holding a steady turn stays free.
-
-### Runs
-
-Each run continues from the previous one with `--load`.
-
-| Run | Steps | What changed | Deterministic `--test` result |
+| Run | Steps | Change | Test result |
 |---|---|---|---|
-| `sac_a1_baseline` | 0 → 52k | Handed-out settings; new generated road at ~42k | 50k: takes the first two turns |
-| `sac_a2_steer` | 50k → 74k | Steering penalty 0.30 | 70k: drives the road well until it hits something |
-| `sac_a3_road3` | 70k → 100k | New road at 70k and ~87k | 100k: 2 full laps on a fresh generated road; on Warren most of a lap, then goes straight at one turn |
-| `sac_a4_150k` | 100k → 150k | 3 more generated roads (switch every ~17k) | **150k: 3 full laps on Warren** |
+| `sac_a1_baseline` | 0 → 52k | Course pipeline, default settings | Takes the first two turns of a generated road |
+| `sac_a2_steer` | 50k → 74k | Steering penalty 0.10 → 0.30 | Drives the road well until it hits something |
+| `sac_a3_road3` | 70k → 100k | New generated roads | 2 full laps on an unseen generated road; most of a lap on Warren |
+| `sac_a4_150k` | 100k → 150k | 3 more generated roads | **3 full laps on Warren** |
 
-Warren was never used for training, so it is the held-out track.
+Warren is held out: it is used only for testing.
 
-### Findings
-
-- **Low Power Mode halves the control rate.** With it on, training ran at about 7.5 steps/s; off, about 13.5 steps/s. A 10 s profile of the training process showed about 53% of each step in PyTorch MPS work and 38% waiting for the next sim frame: the simulator and PyTorch share the GPU.
-- **Road rotation is what generalises.** After the first road switch (42k) episode length fell 50 → 23 (−54%); after the switch at ~85k it fell only 46 → 37 (−20%). Training episode length peaked at 62 around 139k.
-- **Judge with `--test`, not by watching training.** Training samples random actions and adds jitter, so it always wobbles; the deterministic test is what the car runs.
-- **Known gaps:** training runs at about 11 steps/s while the car loop runs at 20 Hz; the model drifts toward the edges and does not always recover; at a road fork it can take the wrong branch. Test throttle is often below 0.1, so it drives cautiously.
-
-### Reproduce
-
-Start the sim and leave it at the main menu; the script then loads the scene itself (it prints `loading scene ...`). `--env_name` has no effect if the sim is already inside a scene.
+## How it works
 
 ```
-cd project/mycar
-python train_sac.py --output sac_a1_baseline                       # train from scratch
-python train_sac.py --load <model.zip> --timesteps 50000 --output <new name>   # continue: --timesteps is extra steps
-python train_sac.py --test --load models/sac_models/sac_a4_150k.zip --env_name donkey-warren-track-v0 --test_steps 3000
-python export_onnx.py --algo sac --model models/sac_models/sac_a4_150k.zip --output sac_a4_150k
+Simulator 640×480 RGB
+  → area-average to 160×120 (matches the real camera)
+  → crop top 80 rows, grayscale            preprocessing.py, shared with the car
+  → 40×160 image → SAC policy → [steering, throttle]
 ```
 
-- The road can be changed mid-run with the sim's exit button; training keeps going and re-sends the camera config.
-- On `--load`, the hyperparameters at the top of `train_sac.py` are ignored (stable-baselines3 uses the saved ones); reward and wrapper code changes do apply.
-- Checkpoints save the model and its replay buffer every 10k steps. Ctrl+C during training does not save, so stop right after "SAC CHECKPOINT SAVED".
+- **Observation:** 40×160 grayscale. The same `preprocessing.py` runs in training and in the car's ONNX inference, so both see identical images.
+- **Reward:** staying near the centre line at a target speed, plus a small survival bonus, minus a penalty on *changes* in steering. Leaving the track ends the episode with −1.
+- **Robustness:** during training only, the camera pose and image appearance (brightness, contrast, noise, glare) are randomised.
+- **Generalisation:** the road is regenerated every ~15–20k steps so the agent learns to drive rather than memorise one road.
 
-### Files
+## Findings
 
-| Path | What |
+- **Smooth steering.** At a steering penalty of 0.10, a full left-to-right flip cost about 0.18 reward against a best step of about 1.05, and the agent steered bang-bang. At 0.30 the flip costs about 0.54 while a steady turn stays free; the deterministic policy became smooth.
+- **Road rotation generalises.** Episode length fell 54% after the first road switch (42k steps) but only 20% after a later one (85k).
+- **Control rate on macOS.** Profiling showed about 53% of each step in PyTorch GPU work and 38% waiting for the next simulator frame, because both share the GPU. Low Power Mode cut training from about 13.5 to 7.5 steps/s.
+- **Judge by `--test`.** Training always looks wobbly because SAC samples random actions; the deterministic policy is what the car runs.
+
+## Repository layout
+
+| Path | Contents |
 |---|---|
-| `project/mycar/models/sac_models/sac_a4_150k.zip` | 150k model (stable-baselines3) |
-| `project/mycar/models/onnx_models/sac/sac_a4_150k.onnx` | Same model for the car. Input `[1, 1, 40, 160]` uint8, output `[1, 2]` (steering, throttle) |
-| `project/mycar/models/sac_models/sac_a*/tb_logs/` | TensorBoard logs for all four runs |
+| `project/mycar/train_sac.py` | SAC training and testing (real-car pipeline) |
+| `project/mycar/preprocessing.py` | Crop and grayscale, shared by training and the car |
+| `project/mycar/export_onnx.py` | Export a BC, PPO or SAC model to ONNX and verify it against PyTorch |
+| `project/mycar/train_sac_zoo.py` | Earlier SAC experiments: RL Zoo preset, alternative rewards, fine-tune overrides |
+| `project/mycar/train_ppo.py` | PPO training and testing |
+| `train_bc.py` | Behavioural cloning in PyTorch |
+| `project/mycar/compare_runs.py` | Plot reward, episode length and speed of several runs on one image |
+| `project/mycar/manage.py`, `calibrate.py`, `config.py`, `myconfig.py` | DonkeyCar car application and configuration |
+| `project/mycar/models/` | Trained models, ONNX exports and TensorBoard logs |
+| `dockerfile`, `compose.yml`, `compose.mac.yml` | Docker environment (Linux/CUDA) |
+| `MAC-SETUP.md` | Running natively on macOS with the Apple GPU |
 
-Intermediate checkpoints and replay buffers (25 MB and 257 MB each) are not committed.
+## Getting started
+
+Install the dependencies (`requirements.txt`), or use Docker on Linux. On macOS, follow `MAC-SETUP.md`. Start the simulator and leave it at its main menu; the scripts load the requested scene themselves.
+
+```bash
+cd project/mycar
+
+# Test the 150k model on Warren
+python train_sac.py --test --load models/sac_models/sac_a4_150k.zip \
+    --env_name donkey-warren-track-v0 --test_steps 3000
+
+# Train from scratch
+python train_sac.py --output my_run
+
+# Continue from a model (--timesteps counts extra steps)
+python train_sac.py --load models/sac_models/sac_a4_150k.zip --timesteps 50000 --output my_run_2
+
+# Export for the car
+python export_onnx.py --algo sac --model models/sac_models/sac_a4_150k.zip --output my_model
+
+# Training curves
+tensorboard --logdir models/sac_models
+```
+
+Notes:
+
+- Checkpoints (model and replay buffer) are saved every 10k steps. Stopping training with Ctrl+C does not save, so stop right after a checkpoint.
+- The road can be changed during training with the simulator's exit button.
+- When continuing with `--load`, the hyperparameters at the top of `train_sac.py` are ignored and the saved ones are used; reward and wrapper changes do apply.
+- `--env_name` only takes effect when the simulator is at its main menu.
+
+## Model files
+
+| File | Description |
+|---|---|
+| `project/mycar/models/sac_models/sac_a4_150k.zip` | 150k SAC model (stable-baselines3) |
+| `project/mycar/models/onnx_models/sac/sac_a4_150k.onnx` | Same model for the car. Input `[1, 1, 40, 160]` uint8, output `[1, 2]` steering and throttle |
+
+Intermediate checkpoints and replay buffers are not committed (25 MB and 257 MB each).
+
+## Limitations
+
+- Not yet tested on the real car. Training ran at about 11 steps/s; the car's control loop runs at 20 Hz.
+- The agent can drift toward the road edge and not recover, and can take the wrong branch at a road fork.
+- It drives cautiously, often with throttle below 0.1. Real top speed and steering range depend on the car's calibration.
+
+## Credits
+
+The real-car pipeline (`train_sac.py`, `preprocessing.py`, `export_onnx.py`, `myconfig.py`) was provided by the Turku University of Applied Sciences reinforcement learning course. This repository adds macOS support, the steering-penalty change, the training schedule and the experiments above.
