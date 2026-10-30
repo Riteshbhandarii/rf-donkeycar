@@ -3,10 +3,12 @@ import sys
 import uuid
 import os
 import numpy as np
+import math
+import cv2
+import torch
 
 from preprocessing import preprocess_frame, CROP_TOP, DebugImageCallback
 
-import torch
 import gymnasium as gym
 import gym_donkeycar  # noqa: F401
 from stable_baselines3 import SAC
@@ -18,7 +20,7 @@ debugimg = False
 
 # Native macOS: Apple GPU via MPS, sim on the same machine. Docker/lab: CUDA, sim on host.
 ON_MAC = sys.platform == "darwin"
-DEVICE = "mps" if torch.backends.mps.is_available() else "auto"
+DEVICE = "mps" if torch.backends.mps.is_available() else "cuda"
 SIM_HOST = "127.0.0.1" if ON_MAC else "host.docker.internal"
 
 # ============================================================
@@ -38,16 +40,10 @@ parser = argparse.ArgumentParser(description="SAC training for DonkeyCar")
 parser.add_argument("--sim", type=str, default="manual", help="Path to Unity simulator. Use 'manual' when starting simulator yourself.")
 parser.add_argument("--port", type=int, default=9091, help="DonkeySim TCP port.")
 parser.add_argument("--env_name", type=str, default="donkey-generated-roads-v0", choices=env_list, help="DonkeySim environment.")
-parser.add_argument("--timesteps", type=int, default=None, help="Number of SAC training timesteps. Default 100000, or 30000 with --fast.")
+parser.add_argument("--timesteps", type=int, default=100000, help="Number of SAC training timesteps.")
 parser.add_argument("--load", type=str, default=None, help="Path to existing SAC model to continue training.")
 parser.add_argument("--test", action="store_true", help="Load the trained model and drive the simulator.")
 parser.add_argument("--test_steps", type=int, default=5000, help="Number of simulator steps during testing.")
-parser.add_argument("--reward", type=str, default="simple", choices=["simple", "smooth", "survival"], help="Reward: 'simple' (instructor default), 'smooth' (adds an anti-stall penalty) or 'survival' (araffin: +1 per step alive, -10 crash).")
-parser.add_argument("--fast", action="store_true", help="Mac speed mode: half the gradient updates, smaller batches, shorter run, checkpoints every 5000 steps.")
-parser.add_argument("--zoo", action="store_true", help="araffin's tuned DonkeyCar SAC/TQC settings (RL Zoo): lr 7.3e-4, tau 0.02, batch 256, gSDE, throttle 0.4-0.6. Fresh runs only.")
-parser.add_argument("--lr", type=float, default=None, help="Override learning rate (default: script value, or the checkpoint's with --load).")
-parser.add_argument("--gamma", type=float, default=None, help="Override discount factor (default: script value, or the checkpoint's with --load).")
-parser.add_argument("--tau", type=float, default=None, help="Override target-network update rate (default: script value, or the checkpoint's with --load).")
 parser.add_argument("--output", type=str, default="sac_donkey", help="Path/name for final SAC model.(saved under models/sac_models/)")
 args = parser.parse_args()
 
@@ -68,7 +64,7 @@ os.makedirs(tensorboard_dir, exist_ok=True)
 # SAC HYPERPARAMETERS
 # ============================================================
 
-LEARNING_RATE = 3e-4            # default: 3e-4
+LEARNING_RATE = 3e-4           # default: 3e-4
 BUFFER_SIZE = 40000             # default: 1000000 Insanely large as a default, without any image compressing.
 LEARNING_STARTS = 1000          # default: 100
 BATCH_SIZE = 128                # default: 256
@@ -77,52 +73,7 @@ GAMMA = 0.99                    # default: 0.99
 TRAIN_FREQ = 1                  # default: 1
 GRADIENT_STEPS = 1              # default: 1
 ENT_COEF = "auto"               # default: "auto"
-USE_SDE = False                 # default: False
-SDE_SAMPLE_FREQ = -1            # default: -1
-LOG_STD_INIT = -3               # default: -3, only used with gSDE
-THROTTLE_MIN = 0.0
-THROTTLE_MAX = 1.0
-CHECKPOINT_FREQ = 25000         # default: no default
-
-# --fast: on a Mac (MPS) one SAC update costs ~100 ms, so updating on every step caps
-# training at ~5 steps/s. Updating twice every 4 steps with smaller batches roughly
-# doubles that, and a 30k-step run gives a first answer in under an hour.
-if args.fast:
-    BATCH_SIZE = 64
-    TRAIN_FREQ = 4
-    GRADIENT_STEPS = 2
-    CHECKPOINT_FREQ = 5000
-
-# --zoo: araffin's tuned DonkeyCar settings (TQC model card on Hugging Face, araffin/tqc-donkey-minimonaco-track-v0,
-# and learning-to-drive-in-5-minutes config.py). Throttle capped so the car is slow enough to learn steering.
-# Buffer 100k instead of 200k: 50x160 grayscale frames, ~1.6 GB of RAM.
-if args.zoo:
-    LEARNING_RATE = 7.3e-4
-    BUFFER_SIZE = 100000
-    LEARNING_STARTS = 500
-    BATCH_SIZE = 256
-    TAU = 0.02
-    GAMMA = 0.99
-    USE_SDE = True
-    SDE_SAMPLE_FREQ = 16
-    THROTTLE_MIN = 0.4
-    THROTTLE_MAX = 0.6
-    # Train after each episode instead of every step, as many updates as steps collected.
-    # Per-step updates (~100 ms on MPS) drop the control rate to ~4 fps and the car drives blind.
-    TRAIN_FREQ = (1, "episode")
-    GRADIENT_STEPS = -1
-    CHECKPOINT_FREQ = 5000
-
-# Fine-tuning overrides (fresh runs). With --load only the flags you pass are applied, see MODEL.
-if args.lr is not None:
-    LEARNING_RATE = args.lr
-if args.gamma is not None:
-    GAMMA = args.gamma
-if args.tau is not None:
-    TAU = args.tau
-
-if args.timesteps is None:
-    args.timesteps = 30000 if args.fast else 100000
+CHECKPOINT_FREQ = 10000         # default: no default
 
 # ============================================================
 # DONKEY SIM CONFIGURATION
@@ -140,25 +91,78 @@ base_conf = {
     "font_size": 10,
     "max_cte": 10.0,
     "frame_skip": 1,
-    "throttle_min": THROTTLE_MIN,
-    "throttle_max": THROTTLE_MAX,
+    "throttle_min": 0.0,
+    "throttle_max": 1.0,
 
     "cam_config": {
-        "img_w": 160,
-        "img_h": 120,
+        "img_w": 640,
+        "img_h": 480,
         "img_d": 3,
+        "fov": 50,
         # Camera position
         "offset_x": 0.0,
-        "offset_y": 0.7,
+        "offset_y": 0.2,
         "offset_z": 1.0,
-        "rot_x": -19.0,
+        "rot_x": -6.0,
     },
 }
 
+"""     1step_250.png
+        "fov": 50,
+        # Camera position
+        "offset_x": 0.0,
+        "offset_y": 0.0,
+        "offset_z": 1.0,
+        "rot_x": -8.0,"""
 
 # ============================================================
-# IMAGE PREPROCESSING WRAPPER
+# IMAGE PREPROCESSING WRAPPERS
 # ============================================================
+
+class SupersampleWrapper(gym.ObservationWrapper):
+    """Render the sim larger and shrink with area averaging, like the real camera pipeline."""
+    def __init__(self, env, out_w=160, out_h=120):
+        super().__init__(env)
+        self.out_w, self.out_h = out_w, out_h
+        self.observation_space = gym.spaces.Box(0, 255, (out_h, out_w, 3), dtype=np.uint8)
+
+    def observation(self, obs):
+        if not getattr(self, "_printed", False):
+            print("sim frame before resize:", obs.shape)
+            self._printed = True
+        return cv2.resize(obs, (self.out_w, self.out_h), interpolation=cv2.INTER_AREA)
+
+class PoseJitterWrapper(gym.ObservationWrapper):
+    """Training only: per-episode random camera pose change applied to the 160x120 frame.
+    pitch -> vertical shift, side shift -> horizontal shift,
+    height -> vertical scale about the horizon, FOV -> zoom."""
+    def __init__(self, env, fov=50.0, horizon_row=55, pitch_deg=1.0, shift_frac=0.02,
+                 height_frac=0.05, fov_deg=3.0):
+        super().__init__(env)
+        self.h, self.w, _ = env.observation_space.shape
+        self.fov, self.horizon_row = fov, horizon_row
+        self.pitch_deg, self.shift_frac = pitch_deg, shift_frac
+        self.height_frac, self.fov_deg = height_frac, fov_deg
+        self.M = np.eye(3)[:2]
+
+    def reset(self, **kwargs):
+        rng = np.random.default_rng()
+        half = math.radians(self.fov / 2)
+        f = (self.h / 2) / math.tan(half)                                      # focal length in pixels
+        dy = f * math.tan(math.radians(rng.uniform(-self.pitch_deg, self.pitch_deg)))
+        dx = rng.uniform(-self.shift_frac, self.shift_frac) * self.w
+        sy = 1.0 + rng.uniform(-self.height_frac, self.height_frac)
+        z = math.tan(half) / math.tan(math.radians((self.fov + rng.uniform(-self.fov_deg, self.fov_deg)) / 2))
+        cx, cy, yh = self.w / 2, self.h / 2, self.horizon_row
+        H = np.array([[1, 0, 0], [0, sy, yh * (1 - sy)], [0, 0, 1]])           # height
+        Z = np.array([[z, 0, cx * (1 - z)], [0, z, cy * (1 - z)], [0, 0, 1]])  # zoom
+        T = np.array([[1, 0, dx], [0, 1, dy], [0, 0, 1]])                      # pitch + side shift
+        self.M = (T @ Z @ H)[:2]
+        return super().reset(**kwargs)
+
+    def observation(self, obs):
+        return cv2.warpAffine(obs, self.M, (self.w, self.h),
+                              flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
 
 class CropGrayscaleWrapper(gym.ObservationWrapper):
     def __init__(self, env):
@@ -172,13 +176,53 @@ class CropGrayscaleWrapper(gym.ObservationWrapper):
     def observation(self, obs):
         return preprocess_frame(obs)
 
+class AppearanceJitterWrapper(gym.ObservationWrapper):
+    """Training only, on the 1-channel observation: per-episode brightness, contrast and gamma,
+    sensor noise strength and soft glare spots."""
+    def __init__(self, env, contrast=(0.75, 1.25), brightness=20, gamma=(0.8, 1.25),
+                 noise_max=4.0, glare_max=2, glare_amp=(20, 60)):
+        super().__init__(env)
+        self.contrast, self.brightness, self.gamma = contrast, brightness, gamma
+        self.noise_max, self.glare_max, self.glare_amp = noise_max, glare_max, glare_amp
+        self.h, self.w, _ = env.observation_space.shape
+        self.yy, self.xx = np.mgrid[0:self.h, 0:self.w]
+        self.rng = np.random.default_rng()
+        self._new_episode()
+
+    def _new_episode(self):
+        r = self.rng
+        self.c = r.uniform(*self.contrast)
+        self.b = r.uniform(-self.brightness, self.brightness)
+        self.g = r.uniform(*self.gamma)
+        self.sigma = r.uniform(0.0, self.noise_max)
+        self.glare = [(r.uniform(0, self.w), r.uniform(0, self.h), r.uniform(3, 10), r.uniform(*self.glare_amp))
+                      for _ in range(int(r.integers(0, self.glare_max + 1)))]
+
+    def reset(self, **kwargs):
+        self._new_episode()
+        return super().reset(**kwargs)
+
+    def observation(self, obs):
+        x = (obs[..., 0].astype(np.float32) / 255.0) ** self.g
+        m = x.mean()
+        x = ((x - m) * self.c + m) * 255.0 + self.b
+        for cx, cy, s, a in self.glare:
+            x += a * np.exp(-((self.xx - cx) ** 2 + (self.yy - cy) ** 2) / (2 * s * s))
+        x += self.rng.normal(0.0, self.sigma, x.shape)
+        return np.clip(x, 0, 255).astype(np.uint8)[..., np.newaxis]
+
 # ============================================================
 # REWARD
 # ============================================================
 
 class SimpleRewardWrapper(gym.Wrapper):
-    def __init__(self, env):
+    def __init__(self, env, max_cte=6.0, center_sigma=1.1, target_speed=1.5,
+                 survival_bonus=0.05, steering_penalty=0.30):
         super().__init__(env)
+        self.max_cte, self.center_sigma = max_cte, center_sigma
+        self.target_speed = target_speed
+        self.survival_bonus, self.steering_penalty = survival_bonus, steering_penalty
+        self.prev_steer = 0.0
 
     def reset(self, **kwargs):
         self.prev_steer = 0.0
@@ -189,106 +233,20 @@ class SimpleRewardWrapper(gym.Wrapper):
         cte = info.get("cte", 0.0)
         speed = info.get("forward_vel", 0.0)
 
-        # Reward for staying near the center of the track
-        max_cte = 7.0
+        if abs(cte) > self.max_cte:
+            return obs, -1.0, True, truncated, info
 
-        # Off track
-        if abs(cte) > max_cte:
-            terminated = True
-            reward = -1.0
-
-        # Moving forward
-        elif speed > 0.0:
-            reward = (1.0 - abs(cte) / max_cte) * speed
-        # Not moving
+        center = float(np.exp(-(cte / self.center_sigma) ** 2))
+        if speed <= self.target_speed:
+            speed_term = speed / self.target_speed
         else:
-            reward = 0.0
-        
-        # Steering smoothness
-        steer_delta = abs(action[0] - self.prev_steer)
-        reward -= 0.1 * steer_delta
-        self.prev_steer = action[0]
+            speed_term = max(0.0, 1.0 - (speed - self.target_speed) / self.target_speed)
+        reward = center * speed_term + self.survival_bonus
 
-        # Survival reward for maintaining forward movement
-        if speed >= 0.4:
-            reward += 0.2
-
-        return obs, reward, terminated, truncated, info
-
-# Anti-stall variant (opt-in with --reward smooth). Same shape as SimpleRewardWrapper, but:
-# - standing still while on track is penalised, so "do nothing" is no longer a safe
-#   optimum (otherwise the deterministic --test policy can settle at ~0 throttle and
-#   only the random exploration throttle moves the car in training)
-# - the survival bonus is only paid when moving fast enough AND near the centre line
-# - steering smoothness is kept (limits wiggling on the centre line)
-class SmoothRewardWrapper(gym.Wrapper):
-    def __init__(self, env):
-        super().__init__(env)
-        self.prev_steer = 0.0
-
-    def reset(self, **kwargs):
-        self.prev_steer = 0.0
-        return self.env.reset(**kwargs)
-
-    def step(self, action):
-        obs, _, terminated, truncated, info = self.env.step(action)
-        cte = info.get("cte", 0.0)
-        speed = info.get("forward_vel", 0.0)
         steer = float(action[0])
-
-        max_cte = 7.0
-        min_speed = 0.1         # below this the car counts as stalled
-
-        # Off track
-        if abs(cte) > max_cte:
-            terminated = True
-            reward = -1.0
-
-        # Moving forward
-        elif speed > min_speed:
-            reward = (1.0 - abs(cte) / max_cte) * speed
-        # Not moving: small penalty instead of 0
-        else:
-            reward = -0.1
-
-        # Steering smoothness
-        reward -= 0.1 * abs(steer - self.prev_steer)
+        reward -= self.steering_penalty * abs(steer - self.prev_steer)
         self.prev_steer = steer
-
-        # Survival reward only for real forward movement close to the centre line
-        if speed >= 0.4 and abs(cte) < 0.5 * max_cte:
-            reward += 0.2
-
-        return obs, float(reward), terminated, truncated, info
-
-# araffin's reward (learning-to-drive-in-5-minutes): +1 for every step alive plus a small
-# throttle bonus, crash penalty grows with the throttle at the moment of the crash.
-class SurvivalRewardWrapper(gym.Wrapper):
-    def __init__(self, env):
-        super().__init__(env)
-
-    def step(self, action):
-        obs, _, terminated, truncated, info = self.env.step(action)
-        cte = info.get("cte", 0.0)
-        throttle = float(action[1])
-
-        max_cte = 7.0
-
-        # Off track
-        if abs(cte) > max_cte:
-            terminated = True
-
-        # Crash: -10, minus up to 5 more at full throttle
-        if terminated:
-            norm_throttle = (throttle - THROTTLE_MIN) / max(THROTTLE_MAX - THROTTLE_MIN, 1e-6)
-            reward = -10.0 - 5.0 * norm_throttle
-        # Alive: +1 per step, plus throttle bonus
-        else:
-            reward = 1.0 + 0.1 * throttle / THROTTLE_MAX
-
-        return obs, float(reward), terminated, truncated, info
-
-REWARD_WRAPPERS = {"simple": SimpleRewardWrapper, "smooth": SmoothRewardWrapper, "survival": SurvivalRewardWrapper}
+        return obs, reward, terminated, truncated, info
 
 # ============================================================
 # ENVIRONMENT
@@ -296,8 +254,13 @@ REWARD_WRAPPERS = {"simple": SimpleRewardWrapper, "smooth": SmoothRewardWrapper,
 
 def make_env():
     env = gym.make(args.env_name, conf=base_conf)
+    env = SupersampleWrapper(env)
+    if not args.test:
+        env = PoseJitterWrapper(env, fov=base_conf["cam_config"]["fov"])
     env = CropGrayscaleWrapper(env)
-    env = REWARD_WRAPPERS[args.reward](env)
+    if not args.test:
+        env = AppearanceJitterWrapper(env)
+    env = SimpleRewardWrapper(env)
     env = Monitor(env)
     return env
 
@@ -341,23 +304,32 @@ class SACCheckpointCallback(BaseCallback):
         return True
 
 # ============================================================
+# CODE LOG CALLBACK
+# ============================================================
+
+class CodeLogCallback(BaseCallback):
+    """Writes this script to TensorBoard (TEXT tab) at the start of the run."""
+    def _on_training_start(self) -> None:
+        with open(os.path.abspath(__file__)) as f:
+            text = "\n".join("    " + line for line in f.read().splitlines())   # 4 spaces = code block
+        self.logger.record("code/train_sac.py", text, exclude=("stdout", "log", "json", "csv"))
+        self.logger.dump(self.num_timesteps)
+
+    def _on_step(self) -> bool:
+        return True
+
+# ============================================================
 # TEST MODE
 # ============================================================
 
-# SB3 accepts a model path with or without ".zip"; the replay buffer sits next to it.
-# (The default output_path is also a directory, the model itself is output_path + ".zip".)
-def with_zip(path):
-    return path if path.endswith(".zip") else path + ".zip"
-
 if args.test:
-    model_path = with_zip(args.load or output_path)
+    model_path = args.load or output_path
     print()
     print("===================================")
     print("SAC MODEL TEST")
     print("===================================")
     print("Model:", model_path)
     print("Environment:", args.env_name)
-    print("Reward:", args.reward)
     print("Port:", args.port)
     print("Steps:", args.test_steps)
     print()
@@ -395,34 +367,21 @@ if args.load:
     print("Loading SAC model:")
     print(args.load)
 
-    # --fast overrides the update schedule saved in the model
-    fast_kwargs = dict(batch_size=BATCH_SIZE, train_freq=TRAIN_FREQ, gradient_steps=GRADIENT_STEPS) if args.fast else {}
-    # --lr/--gamma/--tau: safe to change when continuing; SAC.load rebuilds lr_schedule from them
-    # and train() pushes the schedule into the optimizers, so they take effect on the first update
-    tune_kwargs = {k: v for k, v in dict(learning_rate=args.lr, gamma=args.gamma, tau=args.tau).items() if v is not None}
-    model = SAC.load(args.load, env=env, device=DEVICE, tensorboard_log=tensorboard_dir, **fast_kwargs, **tune_kwargs)
+    model = SAC.load(args.load, env=env, device=DEVICE, tensorboard_log=tensorboard_dir)
 
-    buffer_path = with_zip(args.load)[:-len(".zip")] + "_buffer.pkl"
+    buffer_path = args.load.replace(".zip", "_buffer.pkl")
 
-    if os.path.isfile(buffer_path):
-        print("Loading replay buffer:")
-        print(buffer_path)
-        model.load_replay_buffer(buffer_path)
-    else:
-        # Empty buffer: wait for LEARNING_STARTS new steps before training again,
-        # otherwise updates would sample from an almost empty buffer.
-        print("WARNING: replay buffer not found:", buffer_path)
-        print("Continuing with an EMPTY replay buffer (collecting", LEARNING_STARTS, "new steps first).")
-        model.learning_starts = model.num_timesteps + LEARNING_STARTS
+    print("Loading replay buffer:")
+    print(buffer_path)
+
+    model.load_replay_buffer(buffer_path)
     print("Continuing SAC training...")
 
 else:
     print()
     print("Creating new SAC model...")
     policy_kwargs = dict(net_arch=dict(pi=[256, 256], qf=[256, 256]))
-    if USE_SDE:
-        policy_kwargs.update(log_std_init=LOG_STD_INIT, use_expln=True)
-    model = SAC("CnnPolicy",
+    model = SAC("CnnPolicy", 
         env, 
         learning_rate=LEARNING_RATE, 
         buffer_size=BUFFER_SIZE,
@@ -432,10 +391,7 @@ else:
         gamma=GAMMA, 
         train_freq=TRAIN_FREQ, 
         gradient_steps=GRADIENT_STEPS,
-        ent_coef=ENT_COEF,
-        use_sde=USE_SDE,
-        sde_sample_freq=SDE_SAMPLE_FREQ,
-        use_sde_at_warmup=USE_SDE,
+        ent_coef=ENT_COEF, 
         policy_kwargs=policy_kwargs,
         optimize_memory_usage=True, 
         replay_buffer_kwargs=dict(handle_timeout_termination=False),
@@ -480,19 +436,7 @@ class SpeedLoggingCallback(BaseCallback):
     
 speed_callback = SpeedLoggingCallback()
 callbacks = [checkpoint_callback, speed_callback]
-
-# --zoo trains between episodes. The sim keeps applying the last control command,
-# so hold the reset car with the hand brake until the next action releases it.
-class BrakeDuringTrainingCallback(BaseCallback):
-    def _on_rollout_end(self) -> None:
-        for env in self.training_env.envs:
-            env.unwrapped.viewer.handler.send_control(0, 0, 1.0)
-
-    def _on_step(self) -> bool:
-        return True
-
-if args.zoo:
-    callbacks.append(BrakeDuringTrainingCallback())
+callbacks.append(CodeLogCallback())
 
 # Debug image
 if debugimg:
@@ -509,15 +453,10 @@ print("===================================")
 print("SAC TRAINING")
 print("===================================")
 print("Environment:", args.env_name)
-print("Reward:", args.reward)
 print("Timesteps:", args.timesteps)
 print("Buffer size:", BUFFER_SIZE)
 print("Batch size:", BATCH_SIZE)
-print("Updates:", GRADIENT_STEPS, "every", TRAIN_FREQ, "steps", "(--fast)" if args.fast else "")
-print("Learning rate:", model.lr_schedule(1.0))
-print("Gamma:", model.gamma)
-print("Tau:", model.tau)
-print("gSDE:", model.use_sde, "| Throttle:", THROTTLE_MIN, "-", THROTTLE_MAX, "(--zoo)" if args.zoo else "")
+print("Learning rate:", LEARNING_RATE)
 print("Learning starts:", LEARNING_STARTS)
 print("Output:", args.output)
 print()
