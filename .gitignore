@@ -10,3 +10,4 @@ project/mycar/data/
 
 # Intermediate SAC checkpoints are large; keep only chosen models
 project/mycar/models/sac_models/sac_a*/checkpoints/
+project/mycar/models/sac_models/sac_a3_road3.zip
